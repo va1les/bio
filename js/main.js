@@ -16,7 +16,6 @@ function botAnswer(message, time) {
     messageContainer.appendChild(messageElement);
     messageContainer.scrollTop = messageContainer.scrollHeight;
 
-    // Сохраняем сообщение в localStorage
     saveChat();
   }, time);
 }
@@ -45,7 +44,6 @@ function sendMessage() {
       botAnswer("текст не готов", 1000);
     }
 
-    // Сохраняем сообщение в localStorage
     saveChat();
   }
 }
@@ -67,7 +65,6 @@ function clearChat() {
   messageContainer.innerHTML = "";
   toggleMenu();
 
-  // Очищаем сохраненный чат в localStorage
   clearSavedChat();
 }
 
@@ -91,13 +88,11 @@ window.addEventListener("DOMContentLoaded", function() {
     loaderContainer.style.display = "none";
   }, 1500);
 
-  // Загружаем сохраненный чат из localStorage при загрузке страницы
   var savedChatMessages = localStorage.getItem("chatMessages");
   if (savedChatMessages) {
     var messageContainer = document.getElementById("messageContainer");
     messageContainer.innerHTML = savedChatMessages;
   } else {
-    // Если чат пустой, выводим приветственные сообщения бота
     botAnswer(
       "Привет! Я разрабатываю ботов на заказ, специализируясь на JavaScript. Мой опыт и навыки позволяют мне создавать ботов, которые отвечают требованиям клиентов и обеспечивают автоматизацию задач, модерацию серверов, взаимодействие с API и многое другое.",
       2000
@@ -108,7 +103,6 @@ window.addEventListener("DOMContentLoaded", function() {
       3000
     );
 
-    // Сохраняем флаг приветственного сообщения в localStorage
     saveChat();
   }
 
