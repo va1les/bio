@@ -1,4 +1,3 @@
-/* CSS */
 body {
   font-family: Arial, sans-serif;
   background-color: #36393F;
@@ -148,7 +147,7 @@ body {
 }
 
 .input-container {
-  background-color:   #40444B;
+  background-color: #40444B;
   padding: 10px;
   border-radius: 8px;
   position: absolute;
