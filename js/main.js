@@ -43,7 +43,7 @@ function sendMessage() {
     if (messageContent === "/цены") {
       botAnswer("Экономика — Договорная;<br>Ваше ТЗ — Договорная;<br>Модерация — от 300₽;<br>Музыка — от 300₽;<br>Баннер — от 200₽;<br>Логирование — от 300₽;<br>Автороли — от 300₽;<br>Тикеты — от 300₽;<br>Верификация — от 200₽.<br>", 1000);
     } else if (messageContent === "/связь") {
-      botAnswer("**Telegram:** va1les_tg<br>**Discord:**va1les", 1000)
+      botAnswer("**Telegram:** va1les_tg<br>**Discord:** va1les", 1000)
     }
 
     saveChat();
@@ -101,7 +101,7 @@ window.addEventListener("DOMContentLoaded", function() {
     );
 
     botAnswer(
-      "**Команды чата-бота:**<br>/цены<br>/связь",
+      "**Команды чата-бота:**<br><br>/цены<br>/связь",
       3000
     );
 
