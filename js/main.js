@@ -42,7 +42,7 @@ function sendMessage() {
     messageContainer.scrollTop = messageContainer.scrollHeight;
     document.getElementById("messageSound").play();
     if (messageContent === "/цены") {
-      botAnswer("текст будет скоро... (1)", 1000);
+      botAnswer("текст будет скоро... (2)", 1000);
     }
 
     saveChat();
