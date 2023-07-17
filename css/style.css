@@ -223,40 +223,35 @@ body {
   text-align: left;
 }
 
-@media (max-width: 767px) {
+@media only screen and (max-width: 767px) {
   .chat-container {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .chat-header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
+    z-index: 2;
+  }
+
+  .message-container {
+    height: calc(100vh - 100px);
+    margin-top: 55px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+
+  .input-container {
+    position: fixed;
     bottom: 0;
-    margin: 0;
-    border-radius: 0;
-    z-index: 9999;
-    
-    .chat-header {
-      position: sticky;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 2;
-    }
-
-    .message-container {
-      height: calc(100% - 100px);
-      margin-top: 100px;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: transparent transparent;
-    }
-
-    .input-container {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 10px;
-      z-index: 2;
-    }
+    left: 0;
+    right: 0;
+    padding: 10px;
+    z-index: 2;
   }
 }
