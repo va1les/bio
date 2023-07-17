@@ -16,7 +16,6 @@ function botAnswer(message, time) {
     messageContainer.appendChild(messageElement);
     messageContainer.scrollTop = messageContainer.scrollHeight;
 
-    // Сохраняем сообщение в localStorage
     saveChat();
   }, time);
 }
@@ -42,7 +41,7 @@ function sendMessage() {
     messageContainer.scrollTop = messageContainer.scrollHeight;
     document.getElementById("messageSound").play();
     if (messageContent === "/цены") {
-      botAnswer("текст будет скоро... (2)", 1000);
+      botAnswer("Экономика — Договорная;<br>Модерация — от 300₽;<br>Музыка — от 300₽;<br>Баннер — от 200₽;<br>Логирование — от 300₽;<br>Автороли — от 300₽;<br>Тикеты — от 300₽;<br>Верификация — от 200₽;<br>Ваши идеи — Договорная.", 1000);
     }
 
     saveChat();
@@ -95,12 +94,12 @@ window.addEventListener("DOMContentLoaded", function() {
     messageContainer.innerHTML = savedChatMessages;
   } else {
     botAnswer(
-      "Я - разработчик дискорд-ботов на заказ. Мой основной язык программирования - JavaScript. Мой опыт считается средним, и я способен выполнить множество задач. Важно отметить, что мои услуги предлагаются по доступной цене.",
+      "Привет! Меня зовут Паша, мне 16 лет. Я разработчик ботов для Discord. Готов создать бота на заказ по доступной цене. Свяжитесь со мной, если вам нужна помощь или бот для вашего сервера Discord.",
       2000
     );
 
     botAnswer(
-      "**Команды чата:**<br>/цены",
+      "**Команды чата-бота:**<br><br>/цены",
       3000
     );
 
