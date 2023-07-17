@@ -11,11 +11,12 @@ function botAnswer(message, time) {
     messageElement.appendChild(userElement);
     var contentElement = document.createElement("div");
     contentElement.classList.add("content");
-    contentElement.textContent = message;
+    contentElement.innerHTML = message.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Выделяем слово между ** жирным шрифтом
     messageElement.appendChild(contentElement);
     messageContainer.appendChild(messageElement);
     messageContainer.scrollTop = messageContainer.scrollHeight;
 
+    // Сохраняем сообщение в localStorage
     saveChat();
   }, time);
 }
@@ -34,13 +35,13 @@ function sendMessage() {
     userMessageElement.appendChild(userElement);
     var contentElement = document.createElement("div");
     contentElement.classList.add("content");
-    contentElement.textContent = messageContent;
+    contentElement.innerHTML = messageContent.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Выделяем слово между ** жирным шрифтом
     userMessageElement.appendChild(contentElement);
     messageContainer.appendChild(userMessageElement);
     messageInput.value = "";
     messageContainer.scrollTop = messageContainer.scrollHeight;
     document.getElementById("messageSound").play();
-    if (messageContent === "цены") {
+    if (messageContent === "!цены") {
       botAnswer("текст не готов", 1000);
     }
 
@@ -94,12 +95,12 @@ window.addEventListener("DOMContentLoaded", function() {
     messageContainer.innerHTML = savedChatMessages;
   } else {
     botAnswer(
-      "Привет! Я разрабатываю ботов на заказ, специализируясь на JavaScript. Мой опыт и навыки позволяют мне создавать ботов, которые отвечают требованиям клиентов и обеспечивают автоматизацию задач, модерацию серверов, взаимодействие с API и многое другое.",
+      "Я - разработчик дискорд-ботов на заказ. Мой основной язык программирования - JavaScript. Мой опыт считается средним, и я способен выполнить множество задач. Важно отметить, что мои услуги предлагаются по доступной цене.",
       2000
     );
 
     botAnswer(
-      "Если тебе нужен бот для Discord или других проектов, свяжись со мной. Я готов принять новые заказы и создать бота, который соответствует твоим потребностям и требованиям.",
+      "**Команды чата:**<br>!цены",
       3000
     );
 
