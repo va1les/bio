@@ -222,31 +222,3 @@ body {
   color: #FFFFFF;
   text-align: left;
 }
-
-@media (max-width: 768px) {
-  .chat-container {
-    max-width: none;
-    margin: 0;
-    height: 100vh;
-  }
-
-  .chat-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 2;
-  }
-
-  .message-container {
-    height: calc(100% - 90px);
-    margin-top: 90px;
-  }
-
-  .input-container {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-}
