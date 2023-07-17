@@ -41,8 +41,8 @@ function sendMessage() {
     messageInput.value = "";
     messageContainer.scrollTop = messageContainer.scrollHeight;
     document.getElementById("messageSound").play();
-    if (messageContent === "!цены") {
-      botAnswer("текст не готов", 1000);
+    if (messageContent === "/цены") {
+      botAnswer("текст будет скоро... (1)", 1000);
     }
 
     saveChat();
@@ -100,7 +100,7 @@ window.addEventListener("DOMContentLoaded", function() {
     );
 
     botAnswer(
-      "**Команды чата:**<br>!цены",
+      "**Команды чата:**<br>/цены",
       3000
     );
 
