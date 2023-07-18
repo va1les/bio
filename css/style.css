@@ -14,6 +14,35 @@ body {
   padding: 0;
 }
 
+.sber-text {
+  background: linear-gradient(180deg, #00ff00, #ffffff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+}
+
+.qiwi-text {
+  background: linear-gradient(180deg, #ff9900, #ffffff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+}
+
+.link {
+  color: #7289DA;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #4E5D94;
+}
+
+.link:visited {
+  color: #7289DA;
+}
+
 .chat-container {
   position: relative;
 }
