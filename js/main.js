@@ -47,11 +47,13 @@ function sendMessage() {
     } else if (messageContent === "/донат") {
       botAnswer(`**Вы можете поддержать меня!**
 <br><br>
-<a class="sber-text">Sber:</a> 2202206703020607
+<a class="sber">
+Sber:</a> 2202206703020607
 <br>
-<a class="qiwi-text">Qiwi:</a> <a class="link" href="https://qiwi.com/n/VAILES">VAILES</a>
+<a class="qiwi">
+Qiwi:</a> <a class="link" href="https://qiwi.com/n/VAILES">VAILES</a>
 <br>
-<a class="link" href="https://www.donationalerts.com/r/va1les">DonationAlerts</a><br>`, 1000)
+<a class="qiwi">DonationAlerts:</a><a class="link">Кликабельно</a><br>`, 1000)
     }
 
     saveChat();
