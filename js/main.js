@@ -53,7 +53,7 @@ Sber:</a> 2202206703020607
 <a class="qiwi">
 Qiwi:</a> <a class="link" href="https://qiwi.com/n/VAILES">VAILES</a>
 <br>
-<a class="qiwi">DonationAlerts:</a><a class="link">Кликабельно</a><br>`, 1000)
+<a class="qiwi">DonationAlerts: </a><a class="link">Кликабельно</a><br>`, 1000)
     }
 
     saveChat();
