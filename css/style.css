@@ -14,16 +14,16 @@ body {
   padding: 0;
 }
 
-.sber-text {
-  background: linear-gradient(180deg, #00ff00, #ffffff);
+.sber {
+   background: linear-gradient(0deg, #00ff00, #ffffff);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent;
 }
 
-.qiwi-text {
-  background: linear-gradient(180deg, #ff9900, #ffffff);
+.qiwi {
+ background: linear-gradient(90deg, #ff9900, #ffffff);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
