@@ -76,9 +76,6 @@ body {
 .btn:hover {
     opacity: 0.8;
 }
-
-/* Стили для кнопки воспроизведения */
-/* Стили для кнопки воспроизведения */
 .play-btn {
     display: inline-flex;
     align-items: center;
@@ -91,19 +88,12 @@ body {
     height: 36px;
     margin-left: 10px;
     cursor: pointer;
-    position: relative;
+    transition: background-color 0.3s ease;
 }
 
-.play-btn:hover {
-    background-color: #5468a6;
-}
-
-.play-btn span.material-icons,
-.play-btn svg {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+/* Скрываем паузу и иконку загрузки по умолчанию */
+#pauseIcon, #loadingIcon {
+    display: none;
 }
 
 /* Стили для анимации вращения загрузочной иконки */
@@ -122,43 +112,16 @@ body {
 }
 
 .play-btn.active #playIcon {
-    opacity: 0;
+    display: none;
 }
 
 .play-btn.active #pauseIcon {
-    opacity: 1;
+    display: inline;
 }
 
 .play-btn.active #loadingIcon {
-    opacity: 1;
+    display: inline;
     animation: rotateAnimation 1s linear infinite;
-}
-
-/* Новые стили для плавной анимации */
-.play-btn #loadingIcon,
-.play-btn #pauseIcon {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.play-btn:hover #playIcon {
-    opacity: 0;
-}
-
-.play-btn:hover #pauseIcon {
-    opacity: 1;
-}
-
-.play-btn.loading #playIcon {
-    opacity: 0;
-}
-
-.play-btn.loading #pauseIcon {
-    opacity: 0;
-}
-
-.play-btn.loading #loadingIcon {
-    opacity: 1;
 }
 
 select {
