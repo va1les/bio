@@ -169,25 +169,19 @@ function toggleSettings() {
     settingsContainer.classList.toggle("settings-visible");
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-    const soundSelect = document.getElementById('soundSelect');
+const soundSelect = document.getElementById('soundSelect');
 
-    fetch('../assets/audio/timer/')
-        .then(response => response.text())
-        .then(data => {
-            const parser = new DOMParser();
-            const xmlData = parser.parseFromString(data, 'text/xml');
-            const files = xmlData.getElementsByTagName('a');
+// Список звуковых файлов (можете добавить или удалить файлы по вашему выбору)
+const soundFiles = [
+  'sound1',
+  'sound2',
+  'sound3'
+];
 
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i].textContent;
-                if (file.endsWith('.mp3')) {
-                    const option = document.createElement('option');
-                    option.value = file.replace('.mp3', '');
-                    option.textContent = option.value;
-                    soundSelect.appendChild(option);
-                }
-            }
-        })
-        .catch(error => console.error('Ошибка при получении списка файлов:', error));
+// Создайте элементы option для каждого звукового файла и добавьте их в select
+soundFiles.forEach(file => {
+  const option = document.createElement('option');
+  option.value = file;
+  option.textContent = file;
+  soundSelect.appendChild(option);
 });
