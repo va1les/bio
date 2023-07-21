@@ -81,7 +81,7 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: #7289DA;
+    background-color: transparent;
     color: #ffffff;
     border: none;
     border-radius: 50%;
@@ -94,6 +94,41 @@ body {
 
 .play-btn:hover {
     background-color: #5468a6;
+}
+
+/* Скрываем паузу и иконку загрузки по умолчанию */
+#pauseIcon,
+#loadingIcon {
+    display: none;
+}
+
+/* Стили для анимации вращения загрузочной иконки */
+@keyframes rotateAnimation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Стили для активной кнопки */
+.play-btn.active {
+    background-color: transparent;
+}
+
+.play-btn.active #playIcon {
+    display: none;
+}
+
+.play-btn.active #pauseIcon {
+    display: inline;
+}
+
+.play-btn.active #loadingIcon {
+    display: inline;
+    animation: rotateAnimation 1s linear infinite;
 }
 
 select {

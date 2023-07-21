@@ -147,10 +147,23 @@ function saveTime() {
     editableElement = null;
 }
 
-function playSound() {
+// Создаем ссылку на аудио-элемент
+const sound = new Audio();
+
+function playSelectedSound() {
     const selectedSound = document.getElementById('soundSelect').value;
-    const sound = new Audio(`sounds/${selectedSound}.mp3`);
+    sound.src = `assets/audio/timer/${selectedSound}.mp3`;
     sound.play();
+}
+
+function togglePlay() {
+    const playBtn = document.querySelector('.play-btn');
+    playBtn.classList.toggle('active');
+    if (sound.paused) {
+        playSelectedSound();
+    } else {
+        sound.pause();
+    }
 }
 
 function toggleSoundSetting() {
