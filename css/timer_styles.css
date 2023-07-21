@@ -1,0 +1,314 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Anatolian+Hieroglyphs&display=swap');
+
+body {
+    font-family: 'Noto Sans Anatolian Hieroglyphs', sans-serif;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+}
+
+.timer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #36393F;
+}
+
+.timer {
+    font-size: 72px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+}
+
+.timer-part {
+    cursor: pointer;
+    border: 2px solid transparent;
+    color: #ffffff;
+    font-size: 72px;
+}
+
+.timer-part:hover {
+    border-color: #7289DA;
+}
+
+.timer-separator {
+    margin: 0 10px;
+    color: #7289DA;
+    user-select: none;
+}
+
+.timer-controls {
+    margin-top: 20px;
+}
+
+.btn {
+    font-size: 18px;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 30px;
+    /* Мягкие края */
+}
+
+.btn-start {
+    background-color: #43b581;
+    /* Зеленый цвет */
+}
+
+.btn-stop {
+    background-color: #747f8d;
+    /* Серый цвет */
+}
+
+.btn-settings {
+    background-color: #7289DA;
+    /* Синий цвет */
+}
+
+/* Стили для иконок в кнопках */
+.material-icons {
+    vertical-align: middle;
+    margin-right: 5px;
+    font-size: 24px;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+/* Стили для кнопки воспроизведения */
+.play-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #7289DA;
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.play-btn:hover {
+    background-color: #5468a6;
+}
+
+/* Общие стили для списка выбора */
+select {
+    font-family: Montserrat, 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    border: 2px solid #7289DA;
+    border-radius: 5px;
+    padding: 6px 10px;
+    background-color: #fff;
+    color: #7289DA;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+select:hover {
+    border-color: #5468a6;
+}
+
+select:disabled {
+    background-color: #f5f5f5;
+    color: #c0c0c0;
+    cursor: not-allowed;
+}
+
+/* Стили для переключателя */
+.switch-container {
+    display: flex;
+    align-items: center;
+}
+
+.sound-label {
+    color: #ffffff;
+    margin-right: 10px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 24px;
+    margin-right: 10px;
+    /* Маленький отступ между переключателем и списком звуков */
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: #7289DA;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #7289DA;
+}
+
+input:checked+.slider:before {
+    transform: translateX(16px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.sound-controls {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.sound-label {
+    color: #ffffff;
+    margin-right: 10px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 24px;
+    margin-right: 10px;
+    /* Маленький отступ между переключателем и списком звуков */
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: #7289DA;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #7289DA;
+}
+
+input:checked+.slider:before {
+    transform: translateX(16px);
+}
+
+select {
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    background-color: #ccc;
+    color: #36393F;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+option {
+    background-color: #fff;
+    color: #36393F;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: #7289DA;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.settings-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.settings-visible {
+    max-height: 1000px;
+    opacity: 1;
+    visibility: visible;
+    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, visibility 0s linear 0s;
+}
+
+.btn-settings {
+    background-color: #7289DA;
+}
+
+.settings-container.show {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition-delay: 0s; /* Удаляем задержку перед скрытием */
+}
