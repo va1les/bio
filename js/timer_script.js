@@ -172,7 +172,7 @@ function toggleSettings() {
 window.addEventListener('DOMContentLoaded', () => {
     const soundSelect = document.getElementById('soundSelect');
 
-    fetch('./assets/audio/timer/')
+    fetch('/assets/audio/timer/')
         .then(response => response.text())
         .then(data => {
             const parser = new DOMParser();
