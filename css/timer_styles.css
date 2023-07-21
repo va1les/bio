@@ -77,6 +77,7 @@ body {
     opacity: 0.8;
 }
 
+/* Стили для кнопки воспроизведения */
 .play-btn {
     display: inline-flex;
     align-items: center;
@@ -90,16 +91,19 @@ body {
     margin-left: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    position: relative; /* Добавим позиционирование */
 }
 
 .play-btn:hover {
     background-color: #5468a6;
 }
 
-/* Скрываем паузу и иконку загрузки по умолчанию */
-#pauseIcon,
-#loadingIcon {
-    display: none;
+.play-btn span.material-icons,
+.play-btn svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 /* Стили для анимации вращения загрузочной иконки */
@@ -107,7 +111,6 @@ body {
     from {
         transform: rotate(0deg);
     }
-
     to {
         transform: rotate(360deg);
     }
@@ -119,17 +122,20 @@ body {
 }
 
 .play-btn.active #playIcon {
-    display: none;
+    opacity: 0; /* Скрываем значок play */
+    transition: opacity 0.3s ease;
 }
 
 .play-btn.active #pauseIcon {
-    display: inline;
+    opacity: 1; /* Показываем значок pause */
+    transition: opacity 0.3s ease;
 }
 
 .play-btn.active #loadingIcon {
-    display: inline;
+    opacity: 1; /* Показываем загрузочную иконку */
     animation: rotateAnimation 1s linear infinite;
 }
+
 
 select {
     font-family: Montserrat, 'Open Sans', sans-serif;
