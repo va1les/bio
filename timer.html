@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Timer</title>
     <link rel="stylesheet" href="css/timer_styles.css">
-    <!-- Добавим иконки из Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
@@ -20,14 +19,11 @@
             <div class="timer-part" id="seconds" contenteditable="true">00</div>
         </div>
         <div class="timer-controls">
-            <!-- Заменим текст кнопок на иконки и добавим классы для стилей -->
             <button class="btn btn-start" onclick="startPauseTimer()"><span class="material-icons">play_arrow</span>Старт</button>
             <button class="btn btn-stop" onclick="stopTimer()"><span class="material-icons">loop</span>Сбросить</button>
-            <!-- Добавим кнопку Настройки -->
             <button class="btn btn-settings" onclick="toggleSettings()"><span class="material-icons">settings</span>Настройки</button>
         </div>
         <hr>
-        <!-- Добавим дополнительный контейнер для настроек -->
         <div class="settings-container" id="settingsContainer">
             <div class="sound-controls">
                 <label class="sound-label" for="soundToggle">Мелодия</label>
@@ -38,9 +34,7 @@
                     </label>
                 </div>
                 <select id="soundSelect" disabled>
-                    <!-- Пустой option, будет заменен JavaScript -->
                 </select>
-                <!-- Стили для кнопки воспроизведения звука -->
                 <button class="play-btn" onclick="playSelectedSound()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z" />

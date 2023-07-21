@@ -4,7 +4,7 @@ let editableElement = null;
 
 function startPauseTimer() {
     if (!timerActive) {
-        saveTime(); // Сохраняем время перед запуском таймера
+        saveTime();
 
         const hours = parseInt(document.getElementById('hours').textContent);
         const minutes = parseInt(document.getElementById('minutes').textContent);
@@ -26,7 +26,7 @@ function startPauseTimer() {
             if (totalSeconds <= 0) {
                 clearInterval(timerInterval);
                 timerActive = false;
-                playSound(); // Воспроизвести звуковой сигнал по окончанию времени
+                playSound();
             }
             updateTimerDisplay(totalSeconds);
         }, 1000);
@@ -129,7 +129,6 @@ function saveTime() {
         return;
     }
 
-    // Добавляем ведущий ноль для однозначных чисел
     const formattedHours = hours.toString().padStart(2, '0');
     const formattedMinutes = minutes.toString().padStart(2, '0');
     const formattedSeconds = seconds.toString().padStart(2, '0');
@@ -141,7 +140,6 @@ function saveTime() {
     const minutesDisplay = document.getElementById('minutes');
     const secondsDisplay = document.getElementById('seconds');
 
-    // Обновляем отображение времени с добавленными ведущими нулями
     hoursDisplay.textContent = formattedHours;
     minutesDisplay.textContent = formattedMinutes;
     secondsDisplay.textContent = formattedSeconds;
@@ -149,7 +147,6 @@ function saveTime() {
     editableElement = null;
 }
 
-// Воспроизведение звукового сигнала (добавьте свой звуковой файл или код для воспроизведения сигнала)
 function playSound() {
     const selectedSound = document.getElementById('soundSelect').value;
     const sound = new Audio(`sounds/${selectedSound}.mp3`);
@@ -173,24 +170,21 @@ function toggleSettings() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    // Получаем ссылку на элемент выпадающего списка
     const soundSelect = document.getElementById('soundSelect');
 
-    // Запрашиваем список файлов из папки "sound" и создаем элементы <option>
-    fetch('assets/audio/timer/') // Отправляем GET-запрос на папку "sound"
-        .then(response => response.text()) // Получаем содержимое папки
+    fetch('assets/audio/timer/')
+        .then(response => response.text())
         .then(data => {
             const parser = new DOMParser();
             const xmlData = parser.parseFromString(data, 'text/xml');
             const files = xmlData.getElementsByTagName('a');
 
-            // Проходимся по каждому файлу и создаем соответствующий option
             for (let i = 0; i < files.length; i++) {
                 const file = files[i].textContent;
-                if (file.endsWith('.mp3')) { // Проверяем, что это звуковой файл
+                if (file.endsWith('.mp3')) {
                     const option = document.createElement('option');
-                    option.value = file.replace('.mp3', ''); // Удаляем расширение .mp3
-                    option.textContent = option.value; // Используем имя файла без расширения в качестве текста option
+                    option.value = file.replace('.mp3', '');
+                    option.textContent = option.value;
                     soundSelect.appendChild(option);
                 }
             }

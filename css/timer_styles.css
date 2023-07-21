@@ -52,12 +52,10 @@ body {
     margin: 0 5px;
     cursor: pointer;
     border-radius: 30px;
-    /* Мягкие края */
 }
 
 .btn-start {
     background-color: #43b581;
-    /* Зеленый цвет */
 }
 
 .btn-stop {
@@ -67,10 +65,8 @@ body {
 
 .btn-settings {
     background-color: #7289DA;
-    /* Синий цвет */
 }
 
-/* Стили для иконок в кнопках */
 .material-icons {
     vertical-align: middle;
     margin-right: 5px;
@@ -81,7 +77,6 @@ body {
     opacity: 0.8;
 }
 
-/* Стили для кнопки воспроизведения */
 .play-btn {
     display: inline-flex;
     align-items: center;
@@ -101,7 +96,6 @@ body {
     background-color: #5468a6;
 }
 
-/* Общие стили для списка выбора */
 select {
     font-family: Montserrat, 'Open Sans', sans-serif;
     font-weight: 400;
@@ -125,7 +119,6 @@ select:disabled {
     cursor: not-allowed;
 }
 
-/* Стили для переключателя */
 .switch-container {
     display: flex;
     align-items: center;
@@ -142,7 +135,6 @@ select:disabled {
     width: 40px;
     height: 24px;
     margin-right: 10px;
-    /* Маленький отступ между переключателем и списком звуков */
 }
 
 .switch input {
@@ -212,7 +204,6 @@ input:checked+.slider:before {
     width: 40px;
     height: 24px;
     margin-right: 10px;
-    /* Маленький отступ между переключателем и списком звуков */
 }
 
 .switch input {
@@ -310,5 +301,5 @@ hr {
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition-delay: 0s; /* Удаляем задержку перед скрытием */
+    transition-delay: 0s;
 }
