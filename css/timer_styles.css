@@ -78,6 +78,7 @@ body {
 }
 
 /* Стили для кнопки воспроизведения */
+/* Стили для кнопки воспроизведения */
 .play-btn {
     display: inline-flex;
     align-items: center;
@@ -90,8 +91,7 @@ body {
     height: 36px;
     margin-left: 10px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    position: relative; /* Добавим позиционирование */
+    position: relative;
 }
 
 .play-btn:hover {
@@ -122,20 +122,44 @@ body {
 }
 
 .play-btn.active #playIcon {
-    opacity: 0; /* Скрываем значок play */
-    transition: opacity 0.3s ease;
+    opacity: 0;
 }
 
 .play-btn.active #pauseIcon {
-    opacity: 1; /* Показываем значок pause */
-    transition: opacity 0.3s ease;
+    opacity: 1;
 }
 
 .play-btn.active #loadingIcon {
-    opacity: 1; /* Показываем загрузочную иконку */
+    opacity: 1;
     animation: rotateAnimation 1s linear infinite;
 }
 
+/* Новые стили для плавной анимации */
+.play-btn #loadingIcon,
+.play-btn #pauseIcon {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.play-btn:hover #playIcon {
+    opacity: 0;
+}
+
+.play-btn:hover #pauseIcon {
+    opacity: 1;
+}
+
+.play-btn.loading #playIcon {
+    opacity: 0;
+}
+
+.play-btn.loading #pauseIcon {
+    opacity: 0;
+}
+
+.play-btn.loading #loadingIcon {
+    opacity: 1;
+}
 
 select {
     font-family: Montserrat, 'Open Sans', sans-serif;
