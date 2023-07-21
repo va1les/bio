@@ -177,7 +177,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const soundSelect = document.getElementById('soundSelect');
 
     // Запрашиваем список файлов из папки "sound" и создаем элементы <option>
-    fetch('assets/audio/timer') // Отправляем GET-запрос на папку "sound"
+    fetch('assets/audio/timer/') // Отправляем GET-запрос на папку "sound"
         .then(response => response.text()) // Получаем содержимое папки
         .then(data => {
             const parser = new DOMParser();
