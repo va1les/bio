@@ -35,13 +35,14 @@
                 </div>
                 <select id="soundSelect" disabled>
                 </select>
-                <button class="play-btn" onclick="togglePlay()">
+                <button class="play-btn" onclick="togglePlay()" disabled>
                     <span class="material-icons" id="playIcon">play_arrow</span>
                     <span class="material-icons" id="pauseIcon">pause</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" id="loadingIcon">
-                        <path d="M0 0h24v24H0z" fill="none" />
-                        <path d="M8 5v14l11-7z" />
-                    </svg>
+                    <div id="loadingIcon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M12 1c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm1 18h-2v-6h2v6zm0-8h-2v-3h2v3z"/>
+                        </svg>
+                    </div>
                 </button>
             </div>
         </div>

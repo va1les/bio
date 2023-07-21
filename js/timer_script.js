@@ -156,24 +156,41 @@ function playSelectedSound() {
     sound.play();
 }
 
+let isPlaying = false;
+
 function togglePlay() {
+    isPlaying = !isPlaying;
+    const playIcon = document.getElementById('playIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+    const loadingIcon = document.getElementById('loadingIcon');
     const playBtn = document.querySelector('.play-btn');
-    playBtn.classList.toggle('active');
-    if (sound.paused) {
+
+    if (isPlaying) {
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'inline-block';
+        loadingIcon.style.display = 'inline-block';
+        playBtn.classList.add('loading'); // Добавляем класс для стилей загрузочной анимации
         playSelectedSound();
     } else {
-        sound.pause();
+        playIcon.style.display = 'inline-block';
+        pauseIcon.style.display = 'none';
+        loadingIcon.style.display = 'none';
+        playBtn.classList.remove('loading'); // Удаляем класс для стилей загрузочной анимации
+        stopSelectedSound();
     }
 }
 
 function toggleSoundSetting() {
     const soundToggle = document.getElementById('soundToggle');
     const soundSelect = document.getElementById('soundSelect');
+    const playBtn = document.querySelector('.play-btn');
 
     if (soundToggle.checked) {
         soundSelect.disabled = false;
+        playBtn.disabled = false; // Включаем кнопку воспроизведения при включении переключателя
     } else {
         soundSelect.disabled = true;
+        playBtn.disabled = true; // Выключаем кнопку воспроизведения при выключении переключателя
     }
 }
 
