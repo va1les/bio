@@ -148,12 +148,22 @@ function saveTime() {
 }
 
 // Создаем ссылку на аудио-элемент
-const sound = new Audio();
+let sound = null;
 
 function playSelectedSound() {
     const selectedSound = document.getElementById('soundSelect').value;
-    sound.src = `assets/audio/timer/${selectedSound}.mp3`;
+    if (sound) {
+        sound.pause();
+    }
+    sound = new Audio(`./assets/audio/timer/${selectedSound}.mp3`);
     sound.play();
+}
+
+function stopSelectedSound() {
+    if (sound) {
+        sound.pause();
+        sound.currentTime = 0;
+    }
 }
 
 let isPlaying = false;
@@ -168,14 +178,10 @@ function togglePlay() {
     if (isPlaying) {
         playIcon.style.display = 'none';
         pauseIcon.style.display = 'inline-block';
-        loadingIcon.style.display = 'inline-block';
-        playBtn.classList.add('loading'); // Добавляем класс для стилей загрузочной анимации
         playSelectedSound();
     } else {
         playIcon.style.display = 'inline-block';
         pauseIcon.style.display = 'none';
-        loadingIcon.style.display = 'none';
-        playBtn.classList.remove('loading'); // Удаляем класс для стилей загрузочной анимации
         stopSelectedSound();
     }
 }
@@ -203,15 +209,28 @@ const soundSelect = document.getElementById('soundSelect');
 
 // Список звуковых файлов (можете добавить или удалить файлы по вашему выбору)
 const soundFiles = [
-  'sound1',
-  'sound2',
-  'sound3'
+    'classic',
+    'bell',
+    'birds',
+    'alert',
+    'cricket',
+    'digital',
+    'flute',
+    'guitar',
+    'horn',
+    'invasion',
+    'magic',
+    'piano',
+    'radar',
+    'robot',
+    'rooster',
+    'school',
 ];
 
 // Создайте элементы option для каждого звукового файла и добавьте их в select
 soundFiles.forEach(file => {
-  const option = document.createElement('option');
-  option.value = file;
-  option.textContent = file;
-  soundSelect.appendChild(option);
+    const option = document.createElement('option');
+    option.value = file;
+    option.textContent = file;
+    soundSelect.appendChild(option);
 });
