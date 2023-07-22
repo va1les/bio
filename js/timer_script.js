@@ -4,7 +4,7 @@ let editableElement = null;
 
 function startPauseTimer() {
     if (!timerActive) {
-        saveTime(); // Сохраняем время перед запуском таймера
+        saveTime();
 
         const hours = parseInt(document.getElementById('hours').textContent);
         const minutes = parseInt(document.getElementById('minutes').textContent);
@@ -26,18 +26,18 @@ function startPauseTimer() {
             if (totalSeconds <= 0) {
                 clearInterval(timerInterval);
                 timerActive = false;
-                playSelectedSound(); // Воспроизвести звуковой сигнал по окончанию времени
-                updateTitle(0); // Обновляем title при окончании таймера
+                playSelectedSound();
+                updateTitle(0);
             }
             updateTimerDisplay(totalSeconds);
         }, 1000);
 
         timerActive = true;
-        togglePlayButton(); // Делаем кнопку воспроизведения неактивной
+        togglePlayButton();
     } else {
         clearInterval(timerInterval);
         timerActive = false;
-        togglePlayButton(); // Включаем кнопку воспроизведения
+        togglePlayButton();
         updateTitle(0);
     }
 }
@@ -45,9 +45,9 @@ function startPauseTimer() {
 function togglePlayButton() {
     const playBtn = document.querySelector('.play-btn');
     if (timerActive) {
-        playBtn.classList.add('paused'); // Добавляем класс для изменения иконки на кнопке
+        playBtn.classList.add('paused');
     } else {
-        playBtn.classList.remove('paused'); // Удаляем класс, чтобы вернуть исходную иконку
+        playBtn.classList.remove('paused');
     }
 }
 
@@ -230,7 +230,7 @@ function toggleSoundSetting() {
     } else {
         soundSelect.disabled = true;
         playBtn.disabled = true;
-        stopSelectedSound(); // Останавливаем звук, если переключатель выключен
+        stopSelectedSound();
     }
 }
 
@@ -239,9 +239,21 @@ function toggleSettings() {
     settingsContainer.classList.toggle("settings-visible");
 }
 
+function limitValue(element) {
+    const value = parseInt(element.textContent);
+    if (isNaN(value) || value < 0) {
+        element.textContent = "00";
+    } else if (element.id === "hours" && value > 96) {
+        element.textContent = "96";
+    } else if (value > 60) {
+        element.textContent = "60";
+    } else {
+        element.textContent = value.toString().padStart(2, "0");
+    }
+}
+
 const soundSelect = document.getElementById('soundSelect');
 
-// Список звуковых файлов (можете добавить или удалить файлы по вашему выбору)
 const soundFiles = [
     'classic',
     'bell',
@@ -261,7 +273,6 @@ const soundFiles = [
     'school',
 ];
 
-// Создайте элементы option для каждого звукового файла и добавьте их в select
 soundFiles.forEach(file => {
     const option = document.createElement('option');
     option.value = file;

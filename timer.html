@@ -13,16 +13,18 @@
 <body>
     <div class="timer-container">
         <div class="timer">
-            <div class="timer-part" id="hours" contenteditable="true">00</div>
+            <div class="timer-part" id="hours" contenteditable="true" oninput="limitValue(this)">00</div>
             <div class="timer-separator">:</div>
-            <div class="timer-part" id="minutes" contenteditable="true">00</div>
+            <div class="timer-part" id="minutes" contenteditable="true" oninput="limitValue(this)">00</div>
             <div class="timer-separator">:</div>
-            <div class="timer-part" id="seconds" contenteditable="true">00</div>
+            <div class="timer-part" id="seconds" contenteditable="true" oninput="limitValue(this)">00</div>
         </div>
         <div class="timer-controls">
-            <button class="btn btn-start" onclick="startPauseTimer()"><span class="material-icons">play_arrow</span>Старт</button>
+            <button class="btn btn-start" onclick="startPauseTimer()"><span
+                    class="material-icons">play_arrow</span>Старт</button>
             <button class="btn btn-stop" onclick="stopTimer()"><span class="material-icons">loop</span>Сбросить</button>
-            <button class="btn btn-settings" onclick="toggleSettings()"><span class="material-icons">settings</span>Настройки</button>
+            <button class="btn btn-settings" onclick="toggleSettings()"><span
+                    class="material-icons">settings</span>Настройки</button>
         </div>
         <hr>
         <div class="settings-container settings-visible" id="settingsContainer">

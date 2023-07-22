@@ -76,6 +76,7 @@ body {
 .btn:hover {
     opacity: 0.8;
 }
+
 .play-btn {
     display: inline-flex;
     align-items: center;
@@ -91,22 +92,21 @@ body {
     transition: background-color 0.3s ease;
 }
 
-/* Скрываем паузу и иконку загрузки по умолчанию */
-#pauseIcon, #loadingIcon {
+#pauseIcon,
+#loadingIcon {
     display: none;
 }
 
-/* Стили для анимации вращения загрузочной иконки */
 @keyframes rotateAnimation {
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }
 }
 
-/* Стили для активной кнопки */
 .play-btn.active {
     background-color: transparent;
 }
@@ -334,12 +334,12 @@ hr {
 
 @media only screen and (max-width: 600px) {
     .btn {
-        font-size: 0; /* Скрываем текст */
-        padding: 8px; /* Уменьшаем padding для лучшего визуального эффекта */
+        font-size: 0;
+        padding: 8px;
     }
 
     .material-icons {
-        font-size: 36px; /* Увеличиваем размер иконок для лучшего отображения на телефонах */
+        font-size: 36px;
     }
 }
 
