@@ -28,7 +28,6 @@ function startPauseTimer() {
                 timerActive = false;
                 playSelectedSound(); // Воспроизвести звуковой сигнал по окончанию времени
                 updateTitle(0); // Обновляем title при окончании таймера
-                redirectToPageAfterTimer();
             }
             updateTimerDisplay(totalSeconds);
         }, 1000);
@@ -41,13 +40,6 @@ function startPauseTimer() {
         togglePlayButton(); // Включаем кнопку воспроизведения
         updateTitle(0);
     }
-}
-
-function redirectToPageAfterTimer() {
-    const redirectUrl = "https://va1les.ru/timer"; // Замените ссылку на нужную
-    setTimeout(() => {
-        window.location.replace(redirectUrl);
-    }, 500); // Здесь установите желаемую задержку (в миллисекундах) перед переходом на другую страницу
 }
 
 function togglePlayButton() {
