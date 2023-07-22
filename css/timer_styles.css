@@ -331,3 +331,56 @@ hr {
     align-items: center;
     transition-delay: 0s;
 }
+
+@media only screen and (max-width: 600px) {
+    .btn {
+        font-size: 0; /* Скрываем текст */
+        padding: 8px; /* Уменьшаем padding для лучшего визуального эффекта */
+    }
+
+    .material-icons {
+        font-size: 36px; /* Увеличиваем размер иконок для лучшего отображения на телефонах */
+    }
+}
+
+.btn-start {
+    background-color: #43b581;
+}
+
+.btn-stop {
+    background-color: #747f8d;
+}
+
+.btn-settings {
+    background-color: #7289DA;
+}
+
+.play-btn.active {
+    background-color: transparent;
+}
+
+.play-btn.active #playIcon {
+    display: none;
+}
+
+.play-btn.active #pauseIcon {
+    display: inline;
+}
+
+.play-btn.active #loadingIcon {
+    display: inline;
+    animation: rotateAnimation 1s linear infinite;
+}
+
+select {
+    font-family: Montserrat, 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    border: 2px solid #7289DA;
+    border-radius: 5px;
+    padding: 6px 10px;
+    background-color: #fff;
+    color: #7289DA;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
