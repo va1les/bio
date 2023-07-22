@@ -82,6 +82,10 @@ function stopTimer() {
     clearInterval(timerInterval);
     timerActive = false;
     updateTimerDisplay(0);
+const startIcon = document.getElementById('startBtnIcon');
+    const pauseIcon = document.getElementById('pauseBtnIcon');
+startIcon.style.display = 'inline-block';
+        pauseIcon.style.display = 'none';
 }
 
 function editTime(e) {
