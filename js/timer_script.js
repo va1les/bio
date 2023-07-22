@@ -4,7 +4,7 @@ let editableElement = null;
 
 function startPauseTimer() {
     if (!timerActive) {
-        saveTime();
+        saveTime(); // Сохраняем время перед запуском таймера
 
         const hours = parseInt(document.getElementById('hours').textContent);
         const minutes = parseInt(document.getElementById('minutes').textContent);
@@ -26,18 +26,19 @@ function startPauseTimer() {
             if (totalSeconds <= 0) {
                 clearInterval(timerInterval);
                 timerActive = false;
-                playSound();
+                playSelectedSound(); // Воспроизвести звуковой сигнал по окончанию времени
             }
             updateTimerDisplay(totalSeconds);
         }, 1000);
 
         timerActive = true;
+        togglePlayButton(); // Делаем кнопку воспроизведения неактивной
     } else {
         clearInterval(timerInterval);
         timerActive = false;
+        togglePlayButton(); // Включаем кнопку воспроизведения
     }
 }
-
 
 function stopTimer() {
     clearInterval(timerInterval);
@@ -172,8 +173,6 @@ function togglePlay() {
     isPlaying = !isPlaying;
     const playIcon = document.getElementById('playIcon');
     const pauseIcon = document.getElementById('pauseIcon');
-    const loadingIcon = document.getElementById('loadingIcon');
-    const playBtn = document.querySelector('.play-btn');
 
     if (isPlaying) {
         playIcon.style.display = 'none';
