@@ -46,11 +46,26 @@ function startPauseTimer() {
 
         timerActive = true;
         togglePlayButton();
+        toggleStartPauseIcon();
     } else {
         clearInterval(timerInterval);
         timerActive = false;
         togglePlayButton();
+        toggleStartPauseIcon();
         updateTitle(0);
+    }
+}
+
+function toggleStartPauseIcon() {
+    const startIcon = document.getElementById('startIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+
+    if (timerActive) {
+        startIcon.style.display = 'none';
+        pauseIcon.style.display = 'inline-block';
+    } else {
+        startIcon.style.display = 'inline-block';
+        pauseIcon.style.display = 'none';
     }
 }
 
