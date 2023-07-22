@@ -15,7 +15,7 @@
         <div class="timer">
             <div class="timer-part" id="hours" contenteditable="true" onblur="validateAndSet('hours')">00</div>
             <div class="timer-separator">:</div>
-            <div class="timer-part" id="minutes" contenteditable="true" onblur="validateAndSet('minutes')">00</div>
+            <div class="timer-part" id="minutes" contenteditable="true" onblur="validateAndSet('minutes')">10</div>
             <div class="timer-separator">:</div>
             <div class="timer-part" id="seconds" contenteditable="true" onblur="validateAndSet('seconds')">00</div>
         </div>
@@ -25,6 +25,12 @@
             <button class="btn btn-stop" onclick="stopTimer()"><span class="material-icons">loop</span>Сбросить</button>
             <button class="btn btn-settings" onclick="toggleSettings()"><span
                     class="material-icons">settings</span>Настройки</button>
+        </div>
+        <div class="popup-container" id="popupContainer">
+            <div class="popup">
+                <p>Таймер закончил отсчет!</p>
+                <button class="btn btn-close" onclick="closePopup()">Закрыть</button>
+            </div>
         </div>
         <hr>
         <div class="settings-container settings-visible" id="settingsContainer">

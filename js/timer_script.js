@@ -2,6 +2,16 @@ let timerInterval;
 let timerActive = false;
 let editableElement = null;
 
+const popupContainer = document.getElementById('popupContainer');
+
+function showPopup() {
+    popupContainer.style.display = 'flex';
+}
+
+function closePopup() {
+    popupContainer.style.display = 'none';
+}
+
 function startPauseTimer() {
     if (!timerActive) {
         saveTime();
@@ -28,6 +38,7 @@ function startPauseTimer() {
                 timerActive = false;
                 playSelectedSound();
                 updateTitle(0);
+                showPopup()
             }
             updateTimerDisplay(totalSeconds);
         }, 1000);
