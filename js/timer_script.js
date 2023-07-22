@@ -37,11 +37,13 @@ function startPauseTimer() {
         clearInterval(timerInterval);
         timerActive = false;
         togglePlayButton(); // Включаем кнопку воспроизведения
+        updateTitle(0);
+        window.location.href = "https://va1les.ru/timer";
     }
 }
 
 function togglePlayButton() {
-    const playBtn = document.getElementById('playBtn');
+    const playBtn = document.querySelector('.play-btn');
     if (timerActive) {
         playBtn.classList.add('paused'); // Добавляем класс для изменения иконки на кнопке
     } else {
@@ -111,6 +113,22 @@ document.getElementById('seconds').addEventListener('blur', function () {
     }
 });
 
+function updateTitle(totalSeconds) {
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    const formattedHours = hours.toString().padStart(2, '0');
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    const formattedSeconds = seconds.toString().padStart(2, '0');
+
+    if (timerActive) {
+        document.title = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    } else {
+        document.title = "Таймер не запущен";
+    }
+}
+
 function updateTimerDisplay(totalSeconds) {
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -127,6 +145,7 @@ function updateTimerDisplay(totalSeconds) {
     hoursDisplay.textContent = formattedHours;
     minutesDisplay.textContent = formattedMinutes;
     secondsDisplay.textContent = formattedSeconds;
+    updateTitle(totalSeconds);
 }
 
 function saveTime() {
@@ -161,12 +180,15 @@ function saveTime() {
 let sound = null;
 
 function playSelectedSound() {
-    const selectedSound = document.getElementById('soundSelect').value;
-    if (sound) {
-        sound.pause();
+    const soundToggle = document.getElementById('soundToggle');
+    if (soundToggle.checked) {
+        const selectedSound = document.getElementById('soundSelect').value;
+        if (sound) {
+            sound.pause();
+        }
+        sound = new Audio(`./assets/audio/timer/${selectedSound}.mp3`);
+        sound.play();
     }
-    sound = new Audio(`./assets/audio/timer/${selectedSound}.mp3`);
-    sound.play();
 }
 
 function stopSelectedSound() {
@@ -179,18 +201,21 @@ function stopSelectedSound() {
 let isPlaying = false;
 
 function togglePlay() {
-    isPlaying = !isPlaying;
-    const playIcon = document.getElementById('playIcon');
-    const pauseIcon = document.getElementById('pauseIcon');
+    const soundToggle = document.getElementById('soundToggle');
+    if (soundToggle.checked) {
+        isPlaying = !isPlaying;
+        const playIcon = document.getElementById('playIcon');
+        const pauseIcon = document.getElementById('pauseIcon');
 
-    if (isPlaying) {
-        playIcon.style.display = 'none';
-        pauseIcon.style.display = 'inline-block';
-        playSelectedSound();
-    } else {
-        playIcon.style.display = 'inline-block';
-        pauseIcon.style.display = 'none';
-        stopSelectedSound();
+        if (isPlaying) {
+            playIcon.style.display = 'none';
+            pauseIcon.style.display = 'inline-block';
+            playSelectedSound();
+        } else {
+            playIcon.style.display = 'inline-block';
+            pauseIcon.style.display = 'none';
+            stopSelectedSound();
+        }
     }
 }
 
@@ -201,10 +226,11 @@ function toggleSoundSetting() {
 
     if (soundToggle.checked) {
         soundSelect.disabled = false;
-        playBtn.disabled = false; // Включаем кнопку воспроизведения при включении переключателя
+        playBtn.disabled = false;
     } else {
         soundSelect.disabled = true;
-        playBtn.disabled = true; // Выключаем кнопку воспроизведения при выключении переключателя
+        playBtn.disabled = true;
+        stopSelectedSound(); // Останавливаем звук, если переключатель выключен
     }
 }
 
