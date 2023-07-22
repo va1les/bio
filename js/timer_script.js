@@ -57,8 +57,8 @@ function startPauseTimer() {
 }
 
 function toggleStartPauseIcon() {
-    const startIcon = document.getElementById('startIcon');
-    const pauseIcon = document.getElementById('pauseIcon');
+    const startIcon = document.getElementById('startBtnIcon');
+    const pauseIcon = document.getElementById('pauseBtnIcon');
 
     if (timerActive) {
         startIcon.style.display = 'none';
