@@ -40,6 +40,15 @@ function startPauseTimer() {
     }
 }
 
+function togglePlayButton() {
+    const playBtn = document.getElementById('playBtn');
+    if (timerActive) {
+        playBtn.classList.add('paused'); // Добавляем класс для изменения иконки на кнопке
+    } else {
+        playBtn.classList.remove('paused'); // Удаляем класс, чтобы вернуть исходную иконку
+    }
+}
+
 function stopTimer() {
     clearInterval(timerInterval);
     timerActive = false;
