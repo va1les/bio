@@ -10,6 +10,7 @@ function showPopup() {
 
 function closePopup() {
     popupContainer.style.display = 'none';
+    stopSelectedSound();
 }
 
 function startPauseTimer() {
