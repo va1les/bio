@@ -27,6 +27,9 @@ function startPauseTimer() {
                 clearInterval(timerInterval);
                 timerActive = false;
                 playSelectedSound(); // Воспроизвести звуковой сигнал по окончанию времени
+                updateTitle(0); // Обновляем title при окончании таймера
+                // Добавляем редирект на другую страницу
+                window.location.href = "https://www.example.com"; // Замените ссылку на нужную
             }
             updateTimerDisplay(totalSeconds);
         }, 1000);
@@ -38,7 +41,6 @@ function startPauseTimer() {
         timerActive = false;
         togglePlayButton(); // Включаем кнопку воспроизведения
         updateTitle(0);
-        window.location.href = "https://va1les.ru/timer";
     }
 }
 
