@@ -239,16 +239,24 @@ function toggleSettings() {
     settingsContainer.classList.toggle("settings-visible");
 }
 
-function limitValue(element) {
+const DEFAULT_VALUES = {
+    hours: 96,
+    minutes: 60,
+    seconds: 60
+};
+
+function validateAndSet(id) {
+    const element = document.getElementById(id);
     const value = parseInt(element.textContent);
-    if (isNaN(value) || value < 0) {
-        element.textContent = "00";
-    } else if (element.id === "hours" && value > 96) {
-        element.textContent = "96";
-    } else if (value > 60) {
-        element.textContent = "60";
+
+    if (id === 'hours') {
+        if (isNaN(value) || value < 0 || value > 96) {
+            element.textContent = DEFAULT_VALUES[id].toString().padStart(2, '0');
+        }
     } else {
-        element.textContent = value.toString().padStart(2, "0");
+        if (isNaN(value) || value < 0 || value > 60) {
+            element.textContent = DEFAULT_VALUES[id].toString().padStart(2, '0');
+        }
     }
 }
 
