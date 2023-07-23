@@ -89,6 +89,6 @@ app.use((req, res, next) => {
   res.status(404).render('404');
 });
 
-app.listen(port, () => {
+app.listen(port || process.env.PORT, () => {
   console.log(`Сервер запущен на порту ${port}`);
 });
