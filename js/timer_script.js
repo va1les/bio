@@ -28,7 +28,8 @@ function startPauseTimer() {
 
         let totalSeconds = hours * 3600 + minutes * 60 + seconds;
         if (totalSeconds <= 0) {
-            alert("Время должно быть больше 00:00:00.");
+            shakeElement(document.querySelector('.btn-start'), 200)
+            // alert("Время должно быть больше 00:00:00.");
             return;
         }
 
@@ -319,3 +320,10 @@ soundFiles.forEach(file => {
     option.textContent = file;
     soundSelect.appendChild(option);
 });
+
+function shakeElement(element, time) {
+    element.classList.add('shake-animation');
+    setTimeout(() => {
+        element.classList.remove('shake-animation');
+    }, time);
+}

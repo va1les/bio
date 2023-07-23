@@ -372,6 +372,10 @@ hr {
     animation: rotateAnimation 1s linear infinite;
 }
 
+.play-btn:disabled {
+    color: gray;
+}
+
 select {
     font-family: Montserrat, 'Open Sans', sans-serif;
     font-weight: 400;
@@ -419,4 +423,23 @@ select {
     padding: 10px 20px;
     border-radius: 30px;
     cursor: pointer;
+}
+
+.shake-animation {
+    animation: shake 0.1s infinite;
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+    75% {
+        transform: translateX(-5px);
+    }
 }
