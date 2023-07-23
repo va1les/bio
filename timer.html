@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таймер не запущен</title>
+    <link rel="stylesheet" href="css/timer_styles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div class="timer-container">
+        <div class="timer">
+            <div class="timer-part" id="hours" contenteditable="true" onblur="validateAndSet('hours')">00</div>
+            <div class="timer-separator">:</div>
+            <div class="timer-part" id="minutes" contenteditable="true" onblur="validateAndSet('minutes')">10</div>
+            <div class="timer-separator">:</div>
+            <div class="timer-part" id="seconds" contenteditable="true" onblur="validateAndSet('seconds')">00</div>
+        </div>
+        <div class="timer-controls">
+            <button class="btn btn-start" onclick="startPauseTimer()">
+                <span class="material-icons" id="startBtnIcon">play_arrow</span>
+                <span class="material-icons" id="pauseBtnIcon" style="display: none;">pause</span>
+                Старт
+            </button>
+            
+            <button class="btn btn-stop" onclick="stopTimer()"><span class="material-icons">loop</span>Сбросить</button>
+            <button class="btn btn-settings" onclick="toggleSettings()"><span
+                    class="material-icons">settings</span>Настройки</button>
+        </div>
+        <div class="popup-container" id="popupContainer">
+            <div class="popup">
+                <p>Таймер закончил отсчет!</p>
+                <button class="btn btn-close" onclick="closePopup()">Закрыть</button>
+            </div>
+        </div>
+        <hr>
+        <div class="settings-container settings-visible" id="settingsContainer">
+            <div class="sound-controls">
+                <label class="sound-label" for="soundToggle">Мелодия</label>
+                <div class="switch-container">
+                    <label class="switch">
+                        <input type="checkbox" id="soundToggle" onchange="toggleSoundSetting()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <select id="soundSelect" disabled>
+                </select>
+                <button class="play-btn" onclick="togglePlay()" disabled>
+                    <span class="material-icons" id="playIcon">play_arrow</span>
+                    <span class="material-icons" id="pauseIcon">pause</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/timer_script.js"></script>
+</body>
+
+</html>
