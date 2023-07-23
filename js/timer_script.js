@@ -39,7 +39,8 @@ function startPauseTimer() {
                 timerActive = false;
                 playSelectedSound();
                 updateTitle(0);
-                showPopup()
+                showPopup();
+                toggleStartPauseIcon();
             }
             updateTimerDisplay(totalSeconds);
         }, 1000);
