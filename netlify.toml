@@ -1,7 +1,4 @@
 [build]
+  command = "npm run build" # Ваша команда для сборки проекта, если нужна
   functions = "lambda"
   publish = "public"
-
-# Команда, которая будет выполнена после завершения деплоя
-[post-processing]
-  command = "node app.js" # Ваша команда после деплоя
