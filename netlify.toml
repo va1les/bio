@@ -1,4 +1,0 @@
-[build]
-  command = "npm run build" # Ваша команда для сборки проекта, если нужна
-  functions = "lambda"
-  publish = "public"
