@@ -1,0 +1,4 @@
+[build]
+  command = "node app.js"
+  functions = "lambda"
+  publish = "public"
