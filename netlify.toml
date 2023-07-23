@@ -1,4 +1,5 @@
 [build]
+  command = "node app.js" # Ваша команда после деплоя
   functions = "lambda"
   publish = "public"
 
