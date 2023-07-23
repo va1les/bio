@@ -220,6 +220,7 @@ function playSelectedSound() {
             sound.pause();
         }
         sound = new Audio(`./assets/audio/timer/${selectedSound}.mp3`);
+        sound.loop = true;
         sound.play();
     }
 }
