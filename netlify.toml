@@ -3,5 +3,5 @@
   publish = "public"
 
 # Команда, которая будет выполнена после завершения деплоя
-[build.postBuild]
+[build.onSuccess]
   command = "node app.js" # Ваша команда после деплоя
