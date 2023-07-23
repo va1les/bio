@@ -3,15 +3,6 @@
   functions = "lambda"
   publish = "public"
 
-[build.environment]
-  # Опционально, здесь можно установить переменные окружения, если нужно
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-
-[plugins.inputs]
-  nextConfigPath = "next.config.js"
-
 # Команда, которая будет выполнена после завершения деплоя
 [build.postBuild]
-  command = "node afterDeploy.js" # Ваша команда после деплоя
+  command = "node app.js" # Ваша команда после деплоя
