@@ -113,7 +113,7 @@ window.addEventListener("DOMContentLoaded", function() {
     );
 
     botAnswer(
-      "**Команды чата-бота:** <br>/цены<br>/связь<br>/донат</a>",
+      "**Команды чат-бота:** <br>/цены<br>/связь<br>/донат</a>",
       3000
     );
 
