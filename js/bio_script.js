@@ -1,5 +1,15 @@
+window.addEventListener('DOMContentLoaded', function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const command = urlParams.get('cmd');
+
+  // Если есть команда, добавляем ее в чат с префиксом "/цены"
+  if (command) {
+    botAnswer(`Вы ввели команду: ${command}`, 1000);
+  }
+});
+
 function botAnswer(message, time) {
-  setTimeout(function() {
+  setTimeout(function () {
     document.getElementById("messageSound").play();
     var messageContainer = document.getElementById("messageContainer");
     var messageElement = document.createElement("div");
@@ -55,7 +65,7 @@ Qiwi:</a> <a class="link" href="https://qiwi.com/n/VAILES" target="_blank">VAILE
 <br>
 <a class="qiwi">
 DonationAlerts: </a><a class="link" href="https://www.donationalerts.com/r/va1les" target="_blank">Кликабельно</a><br>`
-, 1000)
+        , 1000)
     }
 
     saveChat();
@@ -91,14 +101,14 @@ function clearSavedChat() {
   localStorage.removeItem("chatMessages");
 }
 
-window.addEventListener("DOMContentLoaded", function() {
+window.addEventListener("DOMContentLoaded", function () {
   var loaderContainer = document.querySelector(".loader-container");
 
-  setTimeout(function() {
+  setTimeout(function () {
     loaderContainer.classList.add("fade-out");
   }, 1000);
 
-  setTimeout(function() {
+  setTimeout(function () {
     loaderContainer.style.display = "none";
   }, 1500);
 
