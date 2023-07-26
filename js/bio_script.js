@@ -1,6 +1,3 @@
-const http = require('http');
-const url = require('url');
-
 function botAnswer(message, time) {
   setTimeout(function () {
     document.getElementById("messageSound").play();
@@ -23,32 +20,11 @@ function botAnswer(message, time) {
   }, time);
 }
 
-const server = http.createServer((req, res) => {
-  const { pathname, query } = url.parse(req.url, true);
 
-  // Обрабатываем только GET запросы на путь '/bio'
-  if (req.method === 'GET' && pathname === '/bio') {
-    const command = query.cmd; // Получаем значение параметра 'cmd'
-
-    // Если есть команда, добавляем ее в чат с префиксом "/цены"
-    if (command) {
-      botAnswer(`Вы ввели команду: /цены ${command}`, 1000);
-    }
-  }
-
-  // Возвращаем успешный ответ на запрос
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Запрос обработан');
-});
-
-const port = 3000; // Порт, на котором будет запущен сервер
-server.listen(port, () => {
-  console.log(`Сервер запущен на порту ${port}`);
-});
-
-function sendMessage() {
-  var messageInput = document.getElementById("messageInput");
-  var messageContent = messageInput.value.trim();
+function sendMessage(content) {
+  var messageInput = content || document.getElementById("messageInput");
+  console.log(content)
+  var messageContent = content === undefined ? messageInput.value.trim() : content
   if (messageContent !== "") {
     var messageContainer = document.getElementById("messageContainer");
     var userMessageElement = document.createElement("div");
@@ -117,6 +93,20 @@ function clearSavedChat() {
   localStorage.removeItem("chatMessages");
 }
 
+function getCommandFromURL() {
+  const urlParams = new URLSearchParams(window.location.hash.substring(1));
+  return urlParams.get('cmd');
+}
+
+function processCommandFromURL(time) {
+  const command = getCommandFromURL();
+  window.location.hash = '';
+  setTimeout(() => {
+    if (command == null) return;
+    sendMessage("/" + command)
+  }, time);
+}
+
 window.addEventListener("DOMContentLoaded", function () {
   var loaderContainer = document.querySelector(".loader-container");
 
@@ -127,7 +117,6 @@ window.addEventListener("DOMContentLoaded", function () {
   setTimeout(function () {
     loaderContainer.style.display = "none";
   }, 1500);
-
   var savedChatMessages = localStorage.getItem("chatMessages");
   if (savedChatMessages) {
     var messageContainer = document.getElementById("messageContainer");
@@ -148,4 +137,5 @@ window.addEventListener("DOMContentLoaded", function () {
 
   var messageInput = document.getElementById("messageInput");
   messageInput.focus();
+  processCommandFromURL(2000)
 });
