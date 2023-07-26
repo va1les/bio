@@ -1,12 +1,5 @@
-window.addEventListener('DOMContentLoaded', function () {
-  const urlParams = new URLSearchParams(window.location.search);
-  const command = urlParams.get('cmd');
-
-  // Если есть команда, добавляем ее в чат с префиксом "/цены"
-  if (command) {
-    botAnswer(`Вы ввели команду: ${command}`, 1000);
-  }
-});
+const http = require('http');
+const url = require('url');
 
 function botAnswer(message, time) {
   setTimeout(function () {
@@ -29,6 +22,29 @@ function botAnswer(message, time) {
     saveChat();
   }, time);
 }
+
+const server = http.createServer((req, res) => {
+  const { pathname, query } = url.parse(req.url, true);
+
+  // Обрабатываем только GET запросы на путь '/bio'
+  if (req.method === 'GET' && pathname === '/bio') {
+    const command = query.cmd; // Получаем значение параметра 'cmd'
+
+    // Если есть команда, добавляем ее в чат с префиксом "/цены"
+    if (command) {
+      botAnswer(`Вы ввели команду: /цены ${command}`, 1000);
+    }
+  }
+
+  // Возвращаем успешный ответ на запрос
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Запрос обработан');
+});
+
+const port = 3000; // Порт, на котором будет запущен сервер
+server.listen(port, () => {
+  console.log(`Сервер запущен на порту ${port}`);
+});
 
 function sendMessage() {
   var messageInput = document.getElementById("messageInput");
