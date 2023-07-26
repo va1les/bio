@@ -42,11 +42,11 @@ function sendMessage(content) {
     messageInput.value = "";
     messageContainer.scrollTop = messageContainer.scrollHeight;
     document.getElementById("messageSound").play();
-    if (messageContent === "/цены") {
+    if (messageContent == "/цены" || messageContent == "/price") {
       botAnswer("Экономика — Договорная;<br>Ваше ТЗ — Договорная;<br>Модерация — от 300₽;<br>Музыка — от 300₽;<br>Баннер — от 200₽;<br>Логирование — от 300₽;<br>Автороли — от 300₽;<br>Тикеты — от 300₽;<br>Верификация — от 200₽.<br>", 1000);
-    } else if (messageContent === "/связь") {
+    } else if (messageContent === "/связь" ||  messageContent === "/contact") {
       botAnswer("**Telegram:** va1les_tg<br>**Discord:** va1les", 1000)
-    } else if (messageContent === "/донат") {
+    } else if (messageContent === "/донат" || messageContent === "/donate") {
       botAnswer(`**Вы можете поддержать меня!**
 <br><br>
 <a class="sber">
