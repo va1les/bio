@@ -108,6 +108,7 @@ function processCommandFromURL(time) {
 }
 
 window.addEventListener("DOMContentLoaded", function () {
+  time = 1500
   var loaderContainer = document.querySelector(".loader-container");
 
   setTimeout(function () {
@@ -122,6 +123,7 @@ window.addEventListener("DOMContentLoaded", function () {
     var messageContainer = document.getElementById("messageContainer");
     messageContainer.innerHTML = savedChatMessages;
   } else {
+    time += 3000
     botAnswer(
       "Привет! Меня зовут Паша, мне 16 лет. Я разработчик ботов для Discord. Готов создать бота на заказ по доступной цене. Свяжитесь со мной, если вам нужна помощь или бот для вашего сервера Discord.",
       2000
@@ -137,5 +139,5 @@ window.addEventListener("DOMContentLoaded", function () {
 
   var messageInput = document.getElementById("messageInput");
   messageInput.focus();
-  processCommandFromURL(2000)
+  processCommandFromURL(time)
 });
