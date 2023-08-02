@@ -21,7 +21,8 @@ function botTyping(time, timeE) {
   }, timeE);
 }
 
-function botAnswer(message, time) {
+function botAnswer(message, time, bool) {
+if (bool == false) return;
   botTyping(0, time); // Запускаем анимацию "печатающихся" точек перед ответом
   setTimeout(function () {
     document.getElementById("messageSound").play();
@@ -150,12 +151,12 @@ window.addEventListener("DOMContentLoaded", function () {
     time += 3000
     botAnswer(
       "Привет! Меня зовут Паша, мне 16 лет. Я разработчик ботов для Discord. Готов создать бота на заказ по доступной цене. Свяжитесь со мной, если вам нужна помощь или бот для вашего сервера Discord.",
-      2000
+      2000, false
     );
 
     botAnswer(
       "**Команды чат-бота:** <br>/цены<br>/связь<br>/донат</a>",
-      3000
+      3000, false
     );
 
     saveChat();
