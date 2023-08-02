@@ -1,4 +1,28 @@
+function botTyping(time, timeE) {
+  var messageContainer = document.getElementById("messageContainer");
+
+  // Создаем блок с анимацией кругов
+  var typingBlock = document.createElement("div");
+  typingBlock.classList.add("bot-typing");
+  typingBlock.innerHTML = `
+    <div class="dot-container">
+      <div class="dot dot1"></div>
+      <div class="dot dot2"></div>
+      <div class="dot dot3"></div>
+    </div>
+  `;
+
+  messageContainer.appendChild(typingBlock); // Добавляем блок в контейнер
+
+  // Удаляем блок с анимацией после таймаута
+  setTimeout(function() {
+    messageContainer.removeChild(typingBlock);
+    saveChat();
+  }, timeE);
+}
+
 function botAnswer(message, time) {
+  botTyping(0, time); // Запускаем анимацию "печатающихся" точек перед ответом
   setTimeout(function () {
     document.getElementById("messageSound").play();
     var messageContainer = document.getElementById("messageContainer");
@@ -43,9 +67,9 @@ function sendMessage(content) {
     messageContainer.scrollTop = messageContainer.scrollHeight;
     document.getElementById("messageSound").play();
     if (messageContent == "/цены" || messageContent == "/price") {
-      botAnswer("Экономика — Договорная;<br>Ваше ТЗ — Договорная;<br>Модерация — от 300₽;<br>Музыка — от 300₽;<br>Баннер — от 200₽;<br>Логирование — от 300₽;<br>Автороли — от 300₽;<br>Тикеты — от 300₽;<br>Верификация — от 200₽.<br>ChatGPT — от 200₽", 1000);
+      botAnswer("Экономика — Договорная;<br>Ваше ТЗ — Договорная;<br>Модерация — от 300₽;<br>Музыка — от 300₽;<br>Баннер — от 200₽;<br>Логирование — от 300₽;<br>Автороли — от 300₽;<br>Тикеты — от 300₽;<br>Верификация — от 200₽;<br><s>ChatGPT — от 200₽.</s>", 2000);
     } else if (messageContent === "/связь" ||  messageContent === "/contact") {
-      botAnswer("**Telegram:** va1les_tg<br>**Discord:** va1les", 1000)
+      botAnswer("**Telegram:** va1les_tg<br>**Discord:** va1les", 2000)
     } else if (messageContent === "/донат" || messageContent === "/donate") {
       botAnswer(`**Вы можете поддержать меня!**
 <br><br>
@@ -57,7 +81,7 @@ Qiwi:</a> <a class="link" href="https://qiwi.com/n/VAILES" target="_blank">VAILE
 <br>
 <a class="qiwi">
 DonationAlerts: </a><a class="link" href="https://www.donationalerts.com/r/va1les" target="_blank">Кликабельно</a><br>`
-        , 1000)
+        , 2000)
     }
 
     saveChat();
