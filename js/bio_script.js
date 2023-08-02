@@ -22,8 +22,9 @@ function botTyping(time, timeE) {
 }
 
 function botAnswer(message, time, bool) {
-if (bool == false) return;
-  botTyping(0, time); // Запускаем анимацию "печатающихся" точек перед ответом
+if (bool !== false) {
+  botTyping(0, time);
+}
   setTimeout(function () {
     document.getElementById("messageSound").play();
     var messageContainer = document.getElementById("messageContainer");
