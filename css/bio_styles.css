@@ -249,7 +249,7 @@ body {
   align-self: flex-end;
   background-color: #7289DA;
   color: #FFFFFF;
-  text-align: left;
+    
 }
 
 @media only screen and (max-width: 767px) {
@@ -283,4 +283,42 @@ body {
     padding: 10px;
     z-index: 2;
   }
+}
+
+/* Анимация пульсации кругов */
+/* Стили для блока с анимацией кругов */
+.bot-typing {
+  background-color: #40444B;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  margin: 5px 4px;
+}
+
+/* Стили для кругов */
+.dot-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #7289DA;
+  margin-right: 6px;
+  animation: dotPulse 1.2s infinite;
+}
+
+/* Дополнительные стили для разных кругов, чтобы переливались */
+.dot1 { animation-delay: 0s; }
+.dot2 { animation-delay: 0.2s; }
+.dot3 { animation-delay: 0.4s; }
+
+/* Анимация кругов */
+@keyframes dotPulse {
+  0% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.5; }
 }
