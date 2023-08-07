@@ -12,7 +12,9 @@ function botTyping(time, timeE) {
     </div>
   `;
 
-  messageContainer.appendChild(typingBlock); // Добавляем блок в контейнер
+setTimeout(function(){
+messageContainer.appendChild(typingBlock)
+}, time) 
 
   // Удаляем блок с анимацией после таймаута
   setTimeout(function() {
@@ -23,7 +25,7 @@ function botTyping(time, timeE) {
 
 function botAnswer(message, time, bool) {
 if (bool !== false) {
-  botTyping(0, time);
+  botTyping(1000, time);
 }
   setTimeout(function () {
     document.getElementById("messageSound").play();
@@ -43,7 +45,7 @@ if (bool !== false) {
     messageContainer.scrollTop = messageContainer.scrollHeight;
 
     saveChat();
-  }, time);
+  }, time + 1000);
 }
 
 
