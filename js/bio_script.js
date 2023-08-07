@@ -1,4 +1,4 @@
-function botTyping(time, timeE) {
+Lifunction botTyping(time, timeE) {
   var messageContainer = document.getElementById("messageContainer");
 
   // Создаем блок с анимацией кругов
@@ -20,7 +20,7 @@ messageContainer.appendChild(typingBlock)
   setTimeout(function() {
     messageContainer.removeChild(typingBlock);
     saveChat();
-  }, timeE);
+  }, time + time);
 }
 
 function botAnswer(message, time, bool) {
