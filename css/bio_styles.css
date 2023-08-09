@@ -174,6 +174,9 @@ body {
 .message .content {
   font-size: 14px;
 }
+.messageA {
+    color: #74CCF4;
+}
 
 .input-container {
   background-color: #40444B;
@@ -328,6 +331,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
+    bottom: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
@@ -343,6 +347,7 @@ body {
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
     color: white;
+    margin: 10px;
 }
 
 .profile-title {
