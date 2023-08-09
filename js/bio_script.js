@@ -158,7 +158,10 @@ window.addEventListener("DOMContentLoaded", function () {
     );
 
     botAnswer(
-      "**Команды чат-бота:** <br>/цены<br>/связь<br>/донат</a>",
+      `**Команды чат-бота:** <br>
+      <a class="messageA" id="price">/цены</a><br>
+      <a class="messageA" id="contact">/связь</a><br>
+      <a class="messageA" id="donate">/донат</a>`,
       3000, false
     );
     saveChat();
@@ -172,7 +175,7 @@ const userInfo = document.querySelector('.user-info');
 
     userInfo.addEventListener('click', function() {
       showPopup()
-    });  
+    });      
 });
 
 function showPopup() {
