@@ -161,11 +161,24 @@ window.addEventListener("DOMContentLoaded", function () {
       "**Команды чат-бота:** <br>/цены<br>/связь<br>/донат</a>",
       3000, false
     );
-
     saveChat();
   }
 
   var messageInput = document.getElementById("messageInput");
   messageInput.focus();
   processCommandFromURL(time)
+  
+const userInfo = document.querySelector('.user-info');
+
+    userInfo.addEventListener('click', function() {
+      showPopup()
+    });  
 });
+
+function showPopup() {
+    profilePopupContainer.style.display = 'flex';
+}
+
+function closePopup() {
+    profilePopupContainer.style.display = 'none';
+}
