@@ -73,7 +73,7 @@ function sendMessage(content) {
     if (messageContent == "/цены" || messageContent == "/price") {
       botAnswer("Экономика — Договорная;<br>Ваше ТЗ — Договорная;<br>Модерация — от 300₽;<br>Музыка — от 300₽;<br>Баннер — от 200₽;<br>Логирование — от 300₽;<br>Автороли — от 300₽;<br>Тикеты — от 300₽;<br>Верификация — от 200₽;<br><s>ChatGPT — от 200₽.</s>", 2000);
     } else if (messageContent === "/связь" ||  messageContent === "/contact") {
-      botAnswer("**Telegram:** va1les_tg<br>**Discord:** va1les", 2000)
+      botAnswer('<i class="fab fa-telegram"></i> **Telegram:** va1les_tg<br><i class="fab fa-discord"></i> **Discord:** va1les', 1000)
     } else if (messageContent === "/донат" || messageContent === "/donate") {
       botAnswer(`**Вы можете поддержать меня!**
 <br><br>
