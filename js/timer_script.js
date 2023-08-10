@@ -269,7 +269,7 @@ function toggleSoundSetting() {
 }
 
 function toggleSettings() {
-    var settingsContainer = document.getElementById("settingsContainer");
+    let settingsContainer = document.getElementById("settingsContainer");
     settingsContainer.classList.toggle("settings-visible");
 }
 

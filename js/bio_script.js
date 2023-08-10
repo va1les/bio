@@ -1,8 +1,30 @@
-function botTyping(time, timeE) {
-  var messageContainer = document.getElementById("messageContainer");
+const commandJson =
+{
+  price: {
+    text: `Экономика — Договорная;<br>Ваше ТЗ — Договорная;<br>Модерация — от 300₽;<br>Музыка — от 300₽;<br>Баннер — от 200₽;<br>Логирование — от 300₽;<br>Автороли — от 300₽;<br>Тикеты — от 300₽;<br>Верификация — от 200₽;<br><s>ChatGPT — от 200₽.</s>`,
+    delay: 2000
+  },
+  contact: {
+    text: `<i class="fab fa-telegram"></i> **Telegram:** va1les_tg<br><i class="fab fa-discord"></i> **Discord:** va1les`,
+    delay: 1000
+  },
+  donate: {
+    text: `**Вы можете поддержать меня!**<br><br><a class="sber">Sber:</a> 2202206703020607<br><a class="qiwi">Qiwi:</a> <a class="link" href="https://qiwi.com/n/VAILES" target="_blank">VAILES</a><br><a class="qiwi">DonationAlerts: </a><a class="link" href="https://www.donationalerts.com/r/va1les" target="_blank">Кликабельно</a><br>`,
+    delay: 2000
+  }
+};
 
-  // Создаем блок с анимацией кругов
-  var typingBlock = document.createElement("div");
+let prefix = '/';
+let cmds = [
+  'price',
+  'contact',
+  'donate',
+];
+
+function botTyping(time, timeE) {
+  let messageContainer = document.getElementById("messageContainer");
+
+  let typingBlock = document.createElement("div");
   typingBlock.classList.add("bot-typing");
   typingBlock.innerHTML = `
     <div class="dot-container">
@@ -12,32 +34,32 @@ function botTyping(time, timeE) {
     </div>
   `;
 
-setTimeout(function(){
-messageContainer.appendChild(typingBlock)
-}, time) 
+  setTimeout(function () {
+    messageContainer.appendChild(typingBlock)
+  }, time)
 
-  // Удаляем блок с анимацией после таймаута
-  setTimeout(function() {
+  setTimeout(function () {
     messageContainer.removeChild(typingBlock);
     saveChat();
   }, timeE + time);
 }
 
 function botAnswer(message, time, bool) {
-if (bool !== false) {
-  botTyping(1000, time);
-}
+  if (bool !== false) {
+    botTyping(1000, time);
+  }
+
   setTimeout(function () {
     document.getElementById("messageSound").play();
-    var messageContainer = document.getElementById("messageContainer");
-    var messageElement = document.createElement("div");
+    let messageContainer = document.getElementById("messageContainer");
+    let messageElement = document.createElement("div");
     messageElement.classList.add("message");
     messageElement.classList.add("bot-message");
-    var userElement = document.createElement("div");
+    let userElement = document.createElement("div");
     userElement.classList.add("user");
     userElement.textContent = "! va1les";
     messageElement.appendChild(userElement);
-    var contentElement = document.createElement("div");
+    let contentElement = document.createElement("div");
     contentElement.classList.add("content");
     contentElement.innerHTML = message.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     messageElement.appendChild(contentElement);
@@ -50,46 +72,37 @@ if (bool !== false) {
 
 
 function sendMessage(content) {
-  var messageInput = content || document.getElementById("messageInput");
-  console.log(content)
-  var messageContent = content === undefined ? messageInput.value.trim() : content
+  let messageInput = content || document.getElementById("messageInput");
+  let messageContent = content === undefined ? messageInput.value.trim() : content
   if (messageContent !== "") {
-    var messageContainer = document.getElementById("messageContainer");
-    var userMessageElement = document.createElement("div");
+    let messageContainer = document.getElementById("messageContainer");
+    let userMessageElement = document.createElement("div");
     userMessageElement.classList.add("message");
     userMessageElement.classList.add("user-message");
-    var userElement = document.createElement("div");
+    let userElement = document.createElement("div");
     userElement.classList.add("user");
     userElement.textContent = "Вы";
     userMessageElement.appendChild(userElement);
-    var contentElement = document.createElement("div");
+    let contentElement = document.createElement("div");
     contentElement.classList.add("content");
     contentElement.innerHTML = messageContent.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     userMessageElement.appendChild(contentElement);
     messageContainer.appendChild(userMessageElement);
     messageInput.value = "";
     messageContainer.scrollTop = messageContainer.scrollHeight;
-    document.getElementById("messageSound").play();
-    if (messageContent == "/цены" || messageContent == "/price") {
-      botAnswer("Экономика — Договорная;<br>Ваше ТЗ — Договорная;<br>Модерация — от 300₽;<br>Музыка — от 300₽;<br>Баннер — от 200₽;<br>Логирование — от 300₽;<br>Автороли — от 300₽;<br>Тикеты — от 300₽;<br>Верификация — от 200₽;<br><s>ChatGPT — от 200₽.</s>", 2000);
-    } else if (messageContent === "/связь" ||  messageContent === "/contact") {
-      botAnswer('<i class="fab fa-telegram"></i> **Telegram:** va1les_tg<br><i class="fab fa-discord"></i> **Discord:** va1les', 1000)
-    } else if (messageContent === "/донат" || messageContent === "/donate") {
-      botAnswer(`**Вы можете поддержать меня!**
-<br><br>
-<a class="sber">
-Sber:</a> 2202206703020607
-<br>
-<a class="qiwi">
-Qiwi:</a> <a class="link" href="https://qiwi.com/n/VAILES" target="_blank">VAILES</a>
-<br>
-<a class="qiwi">
-DonationAlerts: </a><a class="link" href="https://www.donationalerts.com/r/va1les" target="_blank">Кликабельно</a><br>`
-        , 2000)
-    }
+    document.getElementById("messageSound").play().catch(() => { return; })
 
-    saveChat();
-  }
+    if (messageContent.startsWith(prefix)) {
+      const command = messageContent.slice(prefix.length).trim();
+      if (cmds.includes(command)) {
+        botAnswer(commandJson[command].text, commandJson[command].delay);
+      }
+    } else {
+      botAnswer('<i class="fas fa-times"></i> Команда не найдена.', 1000);
+    }
+  };
+
+  saveChat();
 }
 
 function handleKeyPress(event) {
@@ -100,20 +113,20 @@ function handleKeyPress(event) {
 }
 
 function toggleMenu() {
-  var menuOverlay = document.getElementById("menuOverlay");
+  let menuOverlay = document.getElementById("menuOverlay");
   menuOverlay.style.display = menuOverlay.style.display === "block" ? "none" : "block";
 }
 
-function clearChat() {
-  var messageContainer = document.getElementById("messageContainer");
+function clearChat(bool) {
+  let messageContainer = document.getElementById("messageContainer");
   messageContainer.innerHTML = "";
-  toggleMenu();
+  if (bool !== false) toggleMenu();
 
   clearSavedChat();
 }
 
 function saveChat() {
-  var messageContainer = document.getElementById("messageContainer");
+  let messageContainer = document.getElementById("messageContainer");
   localStorage.setItem("chatMessages", messageContainer.innerHTML);
 }
 
@@ -137,7 +150,7 @@ function processCommandFromURL(time) {
 
 window.addEventListener("DOMContentLoaded", function () {
   time = 1500
-  var loaderContainer = document.querySelector(".loader-container");
+  let loaderContainer = document.querySelector(".loader-container");
 
   setTimeout(function () {
     loaderContainer.classList.add("fade-out");
@@ -146,42 +159,42 @@ window.addEventListener("DOMContentLoaded", function () {
   setTimeout(function () {
     loaderContainer.style.display = "none";
   }, 1500);
-  var savedChatMessages = localStorage.getItem("chatMessages");
+  let savedChatMessages = localStorage.getItem("chatMessages");
   if (savedChatMessages) {
-    var messageContainer = document.getElementById("messageContainer");
+    let messageContainer = document.getElementById("messageContainer");
     messageContainer.innerHTML = savedChatMessages;
   } else {
-    time += 3000
+    time += 1000
     botAnswer(
-      "Привет! Меня зовут Паша, мне 16 лет. Я разработчик ботов для Discord. Готов создать бота на заказ по доступной цене. Свяжитесь со мной, если вам нужна помощь или бот для вашего сервера Discord.",
-      2000, false
+      `Привет! Меня зовут Паша, мне 16 лет. Я разработчик ботов для Discord. Готов помочь с созданием бота для вашего сервера.`,
+      1000,
     );
 
-    botAnswer(
-      `**Команды чат-бота:** <br>
-      <a class="messageA" id="price">/цены</a><br>
-      <a class="messageA" id="contact">/связь</a><br>
-      <a class="messageA" id="donate">/донат</a>`,
-      3000, false
-    );
+    setTimeout(() => {
+      botAnswer(
+        `**Команды чат-бота:** <br>
+        ${cmds.map(cmd => `<a class="messageA" id="${cmd}">${prefix}${cmd}</a><br>`).join('')}`,
+        2000
+      );
+    }, 2000);
     saveChat();
   }
 
-  var messageInput = document.getElementById("messageInput");
+  let messageInput = document.getElementById("messageInput");
   messageInput.focus();
   processCommandFromURL(time)
-  
-const userInfo = document.querySelector('.user-info');
 
-    userInfo.addEventListener('click', function() {
-      showPopup()
-    });      
+  const userInfo = document.querySelector('.user-info');
+
+  userInfo.addEventListener('click', function () {
+    showPopup()
+  });
 });
 
 function showPopup() {
-    profilePopupContainer.style.display = 'flex';
+  profilePopupContainer.style.display = 'flex';
 }
 
 function closePopup() {
-    profilePopupContainer.style.display = 'none';
+  profilePopupContainer.style.display = 'none';
 }
