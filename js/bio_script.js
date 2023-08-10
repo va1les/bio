@@ -96,9 +96,9 @@ function sendMessage(content) {
       const command = messageContent.slice(prefix.length).trim();
       if (cmds.includes(command)) {
         botAnswer(commandJson[command].text, commandJson[command].delay);
-      }
-    } else {
+      } else {
       botAnswer('<i class="fas fa-times"></i> Команда не найдена.', 1000);
+    }
     }
   };
 
