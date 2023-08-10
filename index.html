@@ -21,6 +21,15 @@
       </div>
       <div class="menu-icon" onclick="toggleMenu()"><i class="fas fa-ellipsis-v"></i></div>
     </div>
+    <div class="menu-overlay" id="menuOverlay">
+      <div class="menu">
+        <ul>
+          <li onclick="clearChat()">Очистить историю чата</li>
+          <hr>
+          <li onclick="toggleMenu()">Отмена</li>
+        </ul>
+      </div>
+    </div>
     <div class="profile-popup-container" id="profilePopupContainer">
       <div class="profile-popup">
         <div class="profile-content">
@@ -58,15 +67,6 @@
   <audio id="messageSound">
     <source src="assets/audio/bio/message.mp3" type="audio/mpeg">
   </audio>
-  <div class="menu-overlay" id="menuOverlay">
-    <div class="menu">
-      <ul>
-        <li onclick="clearChat()">Очистить историю чата</li>
-        <hr>
-        <li onclick="toggleMenu()">Отмена</li>
-      </ul>
-    </div>
-  </div>
   <script src="https://kit.fontawesome.com/your-fontawesome-kit.js"></script>
   <script src="js/bio_script.js"></script>
 </body>
