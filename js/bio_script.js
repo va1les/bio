@@ -5,7 +5,7 @@ function localStorageFunction() {
   return console.log(`Текущий размер хранилища: ${currentStorageSize} байт (${(currentStorageSize / (1024 * 1024)).toFixed(4)} Мб)`);
 }
 
-isLocalStorageFull()
+localStorageFunction()
 
 const commandJson =
 {
