@@ -214,14 +214,13 @@ body {
 }
 
 .menu-overlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: none;
-  overflow: hidden;
   z-index: 999;
 }
 
@@ -354,7 +353,6 @@ body {
 .profile-popup-container {
   display: none;
   position: absolute;
-  /* Изменили значение на 'absolute' */
   top: 0;
   left: 0;
   width: 100%;
@@ -373,10 +371,8 @@ body {
   text-align: center;
   color: white;
   margin: 10px;
-  position: relative;
-  /* Добавьте это свойство */
+  position: fixed;
   top: 10px;
-  /* Добавьте это свойство для задания отступа сверху */
 }
 
 
