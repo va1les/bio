@@ -158,7 +158,7 @@ function processCommandFromURL(time) {
 }
 
 window.addEventListener("DOMContentLoaded", function () {
-  time = 3000
+  let time = 3000
   let loaderContainer = document.querySelector(".loader-container");
 
   setTimeout(function () {
@@ -198,6 +198,12 @@ window.addEventListener("DOMContentLoaded", function () {
   userInfo.addEventListener('click', function () {
     showPopup()
   });
+
+  if (window.innerWidth <= 767) {
+    setTimeout(() => {
+      showNotification();
+    }, time);
+  }
 });
 
 function showPopup() {
@@ -206,4 +212,17 @@ function showPopup() {
 
 function closePopup() {
   profilePopupContainer.style.display = 'none';
+}
+
+function showNotification() {
+  notificationContainer.style.animation = 'onset 1s forwards';
+  notificationContainer.style.display = 'block';
+  setTimeout(closeNotification, 4000);
+}
+
+function closeNotification() {
+  notificationContainer.style.animation = 'fading 1s forwards';
+  setTimeout(() => {
+    notificationContainer.style.display = 'none';
+  }, 1000);
 }
