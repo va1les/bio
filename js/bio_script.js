@@ -1,3 +1,12 @@
+function localStorageFunction() {
+  const usedSpace = JSON.stringify(localStorage).length * 2;
+  const currentStorageSize = JSON.stringify(localStorage).length;
+  usedSpace >= 5 * 1024 * 1024 ? console.log("Локальное хранилище полное.") : console.log("Локальное хранилище еще есть место.")
+  return console.log(`Текущий размер хранилища: ${currentStorageSize} байт (${(currentStorageSize / (1024 * 1024)).toFixed(4)} Мб)`);
+}
+
+isLocalStorageFull()
+
 const commandJson =
 {
   price: {
@@ -97,8 +106,8 @@ function sendMessage(content) {
       if (cmds.includes(command)) {
         botAnswer(commandJson[command].text, commandJson[command].delay);
       } else {
-      botAnswer('<i class="fas fa-times"></i> Команда не найдена.', 1000);
-    }
+        botAnswer('<i class="fas fa-times"></i> Команда не найдена.', 1000);
+      }
     }
   };
 
@@ -149,7 +158,7 @@ function processCommandFromURL(time) {
 }
 
 window.addEventListener("DOMContentLoaded", function () {
-  time = 1500
+  time = 3000
   let loaderContainer = document.querySelector(".loader-container");
 
   setTimeout(function () {
@@ -164,7 +173,7 @@ window.addEventListener("DOMContentLoaded", function () {
     let messageContainer = document.getElementById("messageContainer");
     messageContainer.innerHTML = savedChatMessages;
   } else {
-    time += 1000
+    time += 3000
     botAnswer(
       `Привет! Меня зовут Паша, мне 16 лет. Я разработчик ботов для Discord. Готов помочь с созданием бота для вашего сервера.`,
       1000,

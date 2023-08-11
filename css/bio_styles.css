@@ -232,7 +232,7 @@ body {
   text-align: center;
   color: white;
   margin: 10px;
-  position: absolute;
+  position: fixed;
   right: 20px;
   top: 10px;
 }
