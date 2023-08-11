@@ -293,8 +293,6 @@ body {
   }
 }
 
-/* Анимация пульсации кругов */
-/* Стили для блока с анимацией кругов */
 .bot-typing {
   background-color: #40444B;
   padding: 20px;
@@ -319,7 +317,6 @@ body {
   animation: dotPulse 1.2s infinite;
 }
 
-/* Дополнительные стили для разных кругов, чтобы переливались */
 .dot1 {
   animation-delay: 0s;
 }
@@ -360,7 +357,7 @@ body {
   background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 9999;
 }
 
 .profile-popup {
@@ -465,7 +462,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
   transition: bottom 0.5s ease-in-out;
-  z-index: 9999;
+  z-index: 8888;
   text-align: center;
 }
 
