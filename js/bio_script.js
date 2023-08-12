@@ -1,8 +1,14 @@
 function localStorageFunction() {
   const usedSpace = JSON.stringify(localStorage).length * 2;
-  const currentStorageSize = JSON.stringify(localStorage).length;
-  usedSpace >= 5 * 1024 * 1024 ? console.log("Локальное хранилище полное.") : console.log("Локальное хранилище еще есть место.")
-  return console.log(`Текущий размер хранилища: ${currentStorageSize} байт (${(currentStorageSize / (1024 * 1024)).toFixed(4)} Мб)`);
+  const currentStorageSize = usedSpace / (1024 * 1024); // перевод в Мб
+
+  if (usedSpace >= 5 * 1024 * 1024) {
+    console.log("Локальное хранилище полное.");
+  } else {
+    console.log("Локальное хранилище еще есть место.");
+  }
+
+  console.log(`Текущий размер хранилища: ${currentStorageSize.toFixed(4)} Мб`);
 }
 
 localStorageFunction()
@@ -197,14 +203,8 @@ window.addEventListener("DOMContentLoaded", function () {
 
   userInfo.addEventListener('click', function () {
     showPopup()
-  });
-
-  if (window.innerWidth <= 767) {
-    setTimeout(() => {
-      showNotification();
-    }, time);
-  }
-});
+  })
+})
 
 function showPopup() {
   profilePopupContainer.style.display = 'flex';
@@ -212,17 +212,4 @@ function showPopup() {
 
 function closePopup() {
   profilePopupContainer.style.display = 'none';
-}
-
-function showNotification() {
-  notificationContainer.style.animation = 'onset 1s forwards';
-  notificationContainer.style.display = 'block';
-  setTimeout(closeNotification, 4000);
-}
-
-function closeNotification() {
-  notificationContainer.style.animation = 'fading 1s forwards';
-  setTimeout(() => {
-    notificationContainer.style.display = 'none';
-  }, 1000);
 }

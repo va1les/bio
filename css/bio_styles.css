@@ -301,7 +301,6 @@ body {
   margin: 5px 4px;
 }
 
-/* Стили для кругов */
 .dot-container {
   display: flex;
   align-items: center;
@@ -329,7 +328,6 @@ body {
   animation-delay: 0.4s;
 }
 
-/* Анимация кругов */
 @keyframes dotPulse {
   0% {
     transform: scale(1);
@@ -357,7 +355,7 @@ body {
   background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  z-index: 8888;
 }
 
 .profile-popup {
@@ -367,11 +365,11 @@ body {
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
   color: white;
+  width: 100%;
   margin: 10px;
-  position: fixed;
-  top: 10px;
+  max-width: 400px;
+  z-index: 9999;
 }
-
 
 .profile-title {
   font-size: 24px;
@@ -447,51 +445,4 @@ body {
 
 .social-icons i {
   font-size: 24px;
-}
-
-.notification-container {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  width: 90%;
-  padding: 10px;
-  margin: 10px;
-  margin-bottom: 70px;
-  background-color: #FF6B6B;
-  color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
-  transition: bottom 0.5s ease-in-out;
-  z-index: 8888;
-  text-align: center;
-}
-
-.notification-text {
-  font-size: 14px;
-}
-
-.notification-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-@keyframes fading {
-  0% {
-    opacity: 100%;
-  }
-
-  100% {
-    opacity: 0%;
-  }
-}
-
-@keyframes onset {
-  0% {
-    opacity: 0%;
-  }
-
-  100% {
-    opacity: 100%;
-  }
 }
