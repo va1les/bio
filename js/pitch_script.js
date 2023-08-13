@@ -50,6 +50,8 @@ playButton.addEventListener('click', () => {
                 currentPositionDisplay.textContent = `Текущая позиция: ${speedSlider.value}x (${newDuration.toFixed(2)} сек.)`;
             };
             reader.readAsArrayBuffer(file);
+        } else {
+            alert("Пожалуйста, выберите аудиофайл для загрузки.")
         }
     }
 });
@@ -81,6 +83,8 @@ speedSlider.addEventListener('input', () => {
         const originalDuration = audioBufferSource.buffer.duration;
         const newDuration = originalDuration / speedSlider.value;
         currentPositionDisplay.textContent = `Текущая позиция: ${speedSlider.value}x (${newDuration.toFixed(2)} сек.)`;
+    } else {
+        currentPositionDisplay.textContent = `Текущая позиция: ${speedSlider.value}x`;
     }
 });
 
@@ -99,6 +103,8 @@ downloadButton.addEventListener('click', async () => {
         downloadLink.download = 'changed_track.wav';
         downloadLink.click();
         URL.revokeObjectURL(blobUrl);
+    } else {
+        alert("Пожалуйста, выберите аудиофайл для загрузки.")
     }
 });
 
@@ -176,8 +182,6 @@ function audioBufferToWav(aBuffer) {
 }
 
 const centerIndex = Math.floor(bufferLength / 2);
-
-visualizerContainer.style.display = 'flex';
 
 visualizerContainer.style.display = 'flex';
 visualizerContainer.style.alignItems = 'flex-end';
