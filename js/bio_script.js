@@ -3,15 +3,14 @@ function localStorageFunction() {
   const currentStorageSize = usedSpace / (1024 * 1024); // перевод в Мб
 
   if (usedSpace >= 5 * 1024 * 1024) {
-    console.log("Локальное хранилище полное.");
-  } else {
-    console.log("Локальное хранилище еще есть место.");
-  }
+    console.warn("Локальное хранилище полное.");
+    clearChat();
+    toggleMenu();
+    botAnswer(`<i class="fa fa-trash" aria-hidden="true"></i> Хранилище больше **5Mb**, чат был очищен.`, 1000, 0, 0, 2000, "Система")
+  };
 
   console.log(`Текущий размер хранилища: ${currentStorageSize.toFixed(4)} Мб`);
 }
-
-localStorageFunction()
 
 const commandJson =
 {
@@ -25,18 +24,14 @@ const commandJson =
   },
   donate: {
     text: `**Вы можете поддержать меня!**<br><br><a class="sber">Sber:</a> 2202206703020607<br><a class="qiwi">Qiwi:</a> <a class="link" href="https://qiwi.com/n/VAILES" target="_blank">VAILES</a><br><a class="qiwi">DonationAlerts: </a><a class="link" href="https://www.donationalerts.com/r/va1les" target="_blank">Кликабельно</a><br>`,
-    delay: 2000
+    delay: 1000
   }
 };
 
 let prefix = '/';
-let cmds = [
-  'price',
-  'contact',
-  'donate',
-];
+let cmds = ['price', 'contact', 'donate'];
 
-function botTyping(time, timeE) {
+function botTyping(typing_time, answer_time) {
   let messageContainer = document.getElementById("messageContainer");
 
   let typingBlock = document.createElement("div");
@@ -51,45 +46,55 @@ function botTyping(time, timeE) {
 
   setTimeout(function () {
     messageContainer.appendChild(typingBlock)
-  }, time)
+  }, typing_time)
 
   setTimeout(function () {
     messageContainer.removeChild(typingBlock);
-    saveChat();
-  }, timeE + time);
+  }, typing_time + answer_time);
 }
 
-function botAnswer(message, time, bool) {
-  if (bool !== false) {
-    botTyping(1000, time);
-  }
+function botAnswer(message, answer_time, typing_time, start, delete_message, username) {
+  setTimeout(() => {
+    botTyping(typing_time, answer_time);
 
-  setTimeout(function () {
-    document.getElementById("messageSound").play();
-    let messageContainer = document.getElementById("messageContainer");
-    let messageElement = document.createElement("div");
-    messageElement.classList.add("message");
-    messageElement.classList.add("bot-message");
-    let userElement = document.createElement("div");
-    userElement.classList.add("user");
-    userElement.textContent = "! va1les";
-    messageElement.appendChild(userElement);
-    let contentElement = document.createElement("div");
-    contentElement.classList.add("content");
-    contentElement.innerHTML = message.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-    messageElement.appendChild(contentElement);
-    messageContainer.appendChild(messageElement);
-    messageContainer.scrollTop = messageContainer.scrollHeight;
-
-    saveChat();
-  }, time + 1000);
+    setTimeout(function () {
+      document.getElementById("messageSound").play();
+      let messageContainer = document.getElementById("messageContainer");
+      let messageElement = document.createElement("div");
+      messageElement.classList.add("message");
+      messageElement.classList.add("bot-message");
+      let userElement = document.createElement("div");
+      userElement.classList.add("user");
+      userElement.textContent = username || "! va1les";
+      messageElement.appendChild(userElement);
+      let contentElement = document.createElement("div");
+      contentElement.classList.add("content");
+      contentElement.innerHTML = message.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      messageElement.appendChild(contentElement);
+      messageContainer.appendChild(messageElement);
+      messageContainer.scrollTop = messageContainer.scrollHeight;
+      if (delete_message > 0) {
+        setTimeout(() => {
+          messageContainer.removeChild(messageElement);;
+        }, delete_message);
+      } else {
+      };
+    }, answer_time + typing_time);
+  }, start);
 }
 
 
 function sendMessage(content) {
+  let random = Math.round(Math.random() * 100);
   let messageInput = content || document.getElementById("messageInput");
-  let messageContent = content === undefined ? messageInput.value.trim() : content
-  if (messageContent !== "") {
+  let messageContent = content === undefined ? messageInput.value.trim() : content;
+  if (messageContent.length > 2000) {
+    messageInput.value = "";
+    return botAnswer("Ваше сообщение не было отправлено.", 1000, 0, 0, 2000, "Система");
+  } else if (messageContent !== "") {
+    if (random <= 10) {
+      botAnswer(`<i class="fa fa-music link"></i> <a class="link" href="https://va1les.ru/pitch" target="_blank">https://va1les.ru/pitch</a><br><i class="fas fa-clock link"></i> <a class="link" href="https://va1les.ru/timer" target="_blank">https://va1les.ru/timer</a>`, 0, 0, 0, 8000, "Система")
+    }
     let messageContainer = document.getElementById("messageContainer");
     let userMessageElement = document.createElement("div");
     userMessageElement.classList.add("message");
@@ -110,14 +115,12 @@ function sendMessage(content) {
     if (messageContent.startsWith(prefix)) {
       const command = messageContent.slice(prefix.length).trim();
       if (cmds.includes(command)) {
-        botAnswer(commandJson[command].text, commandJson[command].delay);
+        botAnswer(commandJson[command].text, commandJson[command].delay, 500);
       } else {
-        botAnswer('<i class="fas fa-times"></i> Команда не найдена.', 1000);
+        botAnswer('<i class="fas fa-times error-text"></i> Команда не найдена.', 0, 0, 0, 3000, "Система");
       }
     }
   };
-
-  saveChat();
 }
 
 function handleKeyPress(event) {
@@ -143,10 +146,12 @@ function clearChat(bool) {
 function saveChat() {
   let messageContainer = document.getElementById("messageContainer");
   localStorage.setItem("chatMessages", messageContainer.innerHTML);
+  localStorageFunction();
 }
 
 function clearSavedChat() {
   localStorage.removeItem("chatMessages");
+  localStorageFunction();
 }
 
 function getCommandFromURL() {
@@ -179,31 +184,31 @@ window.addEventListener("DOMContentLoaded", function () {
     let messageContainer = document.getElementById("messageContainer");
     messageContainer.innerHTML = savedChatMessages;
   } else {
-    time += 3000
+    time += 1500
     botAnswer(
       `Привет! Меня зовут Паша, мне 16 лет. Я разработчик ботов для Discord. Готов помочь с созданием бота для вашего сервера.`,
       1000,
+      1000,
+      0
     );
 
-    setTimeout(() => {
-      botAnswer(
-        `**Команды чат-бота:** <br>
-        ${cmds.map(cmd => `<a class="messageA" id="${cmd}">${prefix}${cmd}</a><br>`).join('')}`,
-        2000
-      );
-    }, 2000);
-    saveChat();
-  }
+    const userInfo = document.querySelector('.user-info');
 
+    userInfo.addEventListener('click', function () {
+      showPopup()
+    });
+
+    botAnswer(
+      `**Команды чат-бота:** <br>
+        ${cmds.map(cmd => `<a class="messageA" id="${cmd}">${prefix}${cmd}</a><br>`).join('')}`,
+      1000,
+      1000,
+      1500
+    );
+  }
   let messageInput = document.getElementById("messageInput");
   messageInput.focus();
   processCommandFromURL(time)
-
-  const userInfo = document.querySelector('.user-info');
-
-  userInfo.addEventListener('click', function () {
-    showPopup()
-  })
 })
 
 function showPopup() {
@@ -213,3 +218,46 @@ function showPopup() {
 function closePopup() {
   profilePopupContainer.style.display = 'none';
 }
+
+const observerOptions = {
+  childList: true,
+  subtree: true
+};
+
+function handleMutation(mutationsList, observer) {
+  for (const mutation of mutationsList) {
+    if (mutation.type === 'childList') {
+      saveChat()
+    }
+  }
+}
+
+const messageContainer = document.getElementById('messageContainer');
+const observer = new MutationObserver(handleMutation);
+observer.observe(messageContainer, observerOptions);
+
+function removeMessagesByContentFromLocalStorage(content) {
+  let chatMessages = localStorage.getItem("chatMessages");
+  if (chatMessages) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(chatMessages, "text/html");
+    const messages = doc.getElementsByClassName("message");
+    const messagesToDelete = [];
+
+    for (let i = messages.length - 1; i >= 0; i--) {
+      const messageContent = messages[i].querySelector(".content").textContent;
+      if (messageContent === content) {
+        messagesToDelete.push(messages[i]);
+      }
+    }
+
+    messagesToDelete.forEach(message => {
+      message.remove();
+    });
+
+    localStorage.setItem("chatMessages", doc.body.innerHTML);
+  }
+}
+
+removeMessagesByContentFromLocalStorage(' Команда не найдена.');
+removeMessagesByContentFromLocalStorage(' https://va1les.ru/pitch https://va1les.ru/timer')

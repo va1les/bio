@@ -31,16 +31,13 @@ body {
 }
 
 .link {
+  font-weight: 100;
   color: #7289DA;
   text-decoration: none;
 }
 
 .link:hover {
-  color: #4E5D94;
-}
-
-.link:visited {
-  color: #7289DA;
+  color: rgb(122, 144, 226);
 }
 
 .chat-container {
@@ -445,4 +442,8 @@ body {
 
 .social-icons i {
   font-size: 24px;
+}
+
+.error-text {
+  color: red;
 }
