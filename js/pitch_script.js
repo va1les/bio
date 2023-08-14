@@ -1,10 +1,18 @@
 const audioFileInput = document.getElementById('audioFileInput');
 const playButton = document.getElementById('playButton');
+const resetButton = document.getElementById('resetButton');
+const downloadButton = document.getElementById('downloadButton');
 const speedSlider = document.getElementById('speedSlider');
 const currentPositionDisplay = document.getElementById('currentPositionDisplay');
 const selectedFileName = document.getElementById('selectedFileName');
-const downloadButton = document.getElementById('downloadButton');
-const visualizerContainer = document.getElementById('visualizer'); // Обновите эту строку
+const visualizerContainer = document.getElementById('visualizer');
+
+
+const stylePlay = document.getElementById("stylePlay");
+const stylePause = document.getElementById("stylePause");
+
+const mobileBar = 60;
+const isMobile = window.innerWidth <= 768;
 
 let audioContext = new window.AudioContext();
 let audioBufferSource = null;
@@ -15,18 +23,30 @@ analyser.fftSize = 256;
 const bufferLength = analyser.frequencyBinCount;
 const dataArray = new Uint8Array(bufferLength);
 
-playButton.addEventListener('click', () => {
+function changeIconPlayButton(boolean) {
+    if (boolean == true) {
+        stylePlay.style.display = 'none';
+        stylePause.style.display = 'block';
+    } else {
+        stylePlay.style.display = 'block';
+        stylePause.style.display = 'none';
+    }
+}
+
+function play() {
+    playButton.disabled = true;
     if (audioBufferSource && audioContext.state === 'running') {
         audioContext.suspend().then(() => {
-            playButton.querySelector('.play-pause-icon').textContent = '\u25B6';
+            changeIconPlayButton(false)
         });
     } else if (audioBufferSource && audioContext.state === 'suspended') {
         audioContext.resume().then(() => {
-            playButton.querySelector('.play-pause-icon').textContent = '\u2759\u2759';
+            changeIconPlayButton(true)
         });
     } else {
         const file = audioFileInput.files[0];
         if (file) {
+            playButton.disabled = true;
             const reader = new FileReader();
             reader.onload = async (e) => {
                 if (audioBufferSource) {
@@ -40,7 +60,7 @@ playButton.addEventListener('click', () => {
                 analyser.connect(audioContext.destination);
                 audioBufferSource.playbackRate.value = speedSlider.value;
                 audioBufferSource.start(0);
-                playButton.querySelector('.play-pause-icon').textContent = '\u2759\u2759';
+                changeIconPlayButton(true)
                 isPlaying = true;
 
                 downloadButton.style.display = 'inline-block';
@@ -53,8 +73,60 @@ playButton.addEventListener('click', () => {
         } else {
             alert("Пожалуйста, выберите аудиофайл для загрузки.")
         }
+    };
+    setTimeout(() => {
+        playButton.disabled = false;
+    }, 1000);
+};
+
+function reset() {
+    resetButton.disabled = true;
+    if (audioBufferSource) {
+        audioBufferSource.stop();
+        audioBufferSource.disconnect();
+        audioBufferSource = null;
+
+        const file = audioFileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                const buffer = await audioContext.decodeAudioData(e.target.result);
+                audioBufferSource = audioContext.createBufferSource();
+                audioBufferSource.buffer = buffer;
+                audioBufferSource.connect(analyser);
+                analyser.connect(audioContext.destination);
+                audioBufferSource.playbackRate.value = speedSlider.value;
+                audioBufferSource.start(0);
+                changeIconPlayButton(true)
+                isPlaying = true;
+            };
+            reader.readAsArrayBuffer(file);
+        }
     }
-});
+    setTimeout(() => {
+        resetButton.disabled = false;
+    }, 2000);
+};
+
+async function download() {
+    if (audioBufferSource) {
+        const playbackRate = parseFloat(speedSlider.value);
+        const newBuffer = await applyPlaybackRate(audioBufferSource.buffer, playbackRate);
+
+        const wavData = audioBufferToWav(newBuffer);
+
+        const newBlob = new Blob([wavData], { type: 'audio/wav' });
+
+        const blobUrl = URL.createObjectURL(newBlob);
+        const downloadLink = document.createElement('a');
+        downloadLink.href = blobUrl;
+        downloadLink.download = 'changed_track.wav';
+        downloadLink.click();
+        URL.revokeObjectURL(blobUrl);
+    } else {
+        alert("Пожалуйста, выберите аудиофайл для загрузки.")
+    }
+}
 
 audioFileInput.addEventListener('change', () => {
     if (audioBufferSource && isPlaying) {
@@ -72,6 +144,8 @@ audioFileInput.addEventListener('change', () => {
             fileName = fileName.substring(0, 45) + '...';
         }
         selectedFileName.textContent = fileName;
+        resetButton.disabled = false;
+        downloadButton.disabled = false;
     } else {
         selectedFileName.textContent = 'Выберите аудиофайл';
     }
@@ -85,26 +159,6 @@ speedSlider.addEventListener('input', () => {
         currentPositionDisplay.textContent = `Текущая позиция: ${speedSlider.value}x (${newDuration.toFixed(2)} сек.)`;
     } else {
         currentPositionDisplay.textContent = `Текущая позиция: ${speedSlider.value}x`;
-    }
-});
-
-downloadButton.addEventListener('click', async () => {
-    if (audioBufferSource) {
-        const playbackRate = parseFloat(speedSlider.value);
-        const newBuffer = await applyPlaybackRate(audioBufferSource.buffer, playbackRate);
-
-        const wavData = audioBufferToWav(newBuffer);
-
-        const newBlob = new Blob([wavData], { type: 'audio/wav' });
-
-        const blobUrl = URL.createObjectURL(newBlob);
-        const downloadLink = document.createElement('a');
-        downloadLink.href = blobUrl;
-        downloadLink.download = 'changed_track.wav';
-        downloadLink.click();
-        URL.revokeObjectURL(blobUrl);
-    } else {
-        alert("Пожалуйста, выберите аудиофайл для загрузки.")
     }
 });
 
@@ -181,25 +235,30 @@ function audioBufferToWav(aBuffer) {
     }
 }
 
-const centerIndex = Math.floor(bufferLength / 2);
-
-visualizerContainer.style.display = 'flex';
-visualizerContainer.style.alignItems = 'flex-end';
-
 function updateVisualizer() {
+    const centerIndex = Math.floor((isMobile ? mobileBar : bufferLength) / 2);
+    visualizerContainer.style.display = 'flex';
     analyser.getByteFrequencyData(dataArray);
 
     visualizerContainer.innerHTML = '';
 
-    for (let i = 0; i < bufferLength; i++) {
+    const barMargin = 2;
+    const barWidth = (isMobile ? 10 : 5);
+    const maxHeight = isMobile ? 100 : 200;
+
+    for (let i = 0; i < (isMobile ? mobileBar : bufferLength); i++) {
         const bar = document.createElement('div');
         bar.className = 'visualizer-bar';
 
         const distanceFromCenter = Math.abs(centerIndex - i);
         const strength = 1 - distanceFromCenter / centerIndex;
-        const height = dataArray[i] * strength;
+        const normalizedHeight = dataArray[i] / 255;
+        const scaledHeight = normalizedHeight * strength * maxHeight;
 
-        bar.style.height = `${height}px`;
+        bar.style.width = `${barWidth}px`;
+        bar.style.height = `${scaledHeight}px`;
+        bar.style.marginRight = `${barMargin}px`;
+
         visualizerContainer.appendChild(bar);
     }
 

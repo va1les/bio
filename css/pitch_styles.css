@@ -43,27 +43,59 @@ h1 {
 }
 
 .file-input-icon {
-  margin-right: 10px;
+  margin-right: 6px;
 }
 
-.play-button {
+
+#stylePlay {
+  display: block;
+}
+
+#stylePause {
+  display: none;
+}
+
+button {
   width: 60px;
   height: 60px;
-  background-color: #43b581;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
   color: #ffffff;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
-  display: flex;
+  display: inline-block;
   justify-content: center;
   align-items: center;
   margin: 10px auto;
 }
 
+.play-button {
+  background-color: #43b581;
+}
+
+.play-button:disabled {
+  opacity: 0.5;
+}
+
 .play-button:hover {
   background-color: #3a9e70;
+}
+
+.reset-button {
+  background-color: #d9534f;
+}
+
+.reset-button:disabled {
+  opacity: 0.5;
+}
+
+.download-button {
+  background-color: #FFA500;
+}
+
+.download-button:disabled {
+  opacity: 0.5;
 }
 
 .speed-slider {
@@ -82,15 +114,15 @@ h1 {
   height: 200px;
   position: fixed;
   bottom: 0;
+  left: 0;
   overflow: hidden;
   z-index: -1;
-  left: 50%;
-  transform: translateX(-50%);
+  justify-content: center;
+  align-items: flex-end;
 }
 
 .visualizer-bar {
   width: 5px;
-  height: 100%;
   background-color: #7289da;
   display: inline-block;
   margin: 0 1px;
@@ -103,5 +135,9 @@ h1 {
 
   h1 {
     font-size: 2rem;
+  }
+
+  .visualizer-bar {
+    width: 10px;
   }
 }
