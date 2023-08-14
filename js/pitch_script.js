@@ -6,7 +6,7 @@ const speedSlider = document.getElementById('speedSlider');
 const currentPositionDisplay = document.getElementById('currentPositionDisplay');
 const selectedFileName = document.getElementById('selectedFileName');
 const visualizerContainer = document.getElementById('visualizer');
-
+const volumeSlider = document.getElementById('volumeSlider');
 
 const stylePlay = document.getElementById("stylePlay");
 const stylePause = document.getElementById("stylePause");
@@ -17,6 +17,7 @@ const isMobile = window.innerWidth <= 768;
 let audioContext = new window.AudioContext();
 let audioBufferSource = null;
 let analyser = audioContext.createAnalyser();
+let gainNode = audioContext.createGain();
 let isPlaying = false;
 
 analyser.fftSize = 256;
@@ -56,7 +57,8 @@ function play() {
                 const buffer = await audioContext.decodeAudioData(e.target.result);
                 audioBufferSource = audioContext.createBufferSource();
                 audioBufferSource.buffer = buffer;
-                audioBufferSource.connect(analyser);
+                audioBufferSource.connect(gainNode);
+                gainNode.connect(analyser);
                 analyser.connect(audioContext.destination);
                 audioBufferSource.playbackRate.value = speedSlider.value;
                 audioBufferSource.start(0);
@@ -93,7 +95,8 @@ function reset() {
                 const buffer = await audioContext.decodeAudioData(e.target.result);
                 audioBufferSource = audioContext.createBufferSource();
                 audioBufferSource.buffer = buffer;
-                audioBufferSource.connect(analyser);
+                audioBufferSource.connect(gainNode);
+                gainNode.connect(analyser);
                 analyser.connect(audioContext.destination);
                 audioBufferSource.playbackRate.value = speedSlider.value;
                 audioBufferSource.start(0);
@@ -133,7 +136,7 @@ audioFileInput.addEventListener('change', () => {
         audioBufferSource.stop();
         audioBufferSource.disconnect();
         audioBufferSource = null;
-        playButton.querySelector('.play-pause-icon').textContent = '\u25B6';
+        changeIconPlayButton(false);
         isPlaying = false;
     }
 
@@ -144,6 +147,7 @@ audioFileInput.addEventListener('change', () => {
             fileName = fileName.substring(0, 45) + '...';
         }
         selectedFileName.textContent = fileName;
+        playButton.disabled = false;
         resetButton.disabled = false;
         downloadButton.disabled = false;
     } else {
@@ -152,6 +156,7 @@ audioFileInput.addEventListener('change', () => {
 });
 
 speedSlider.addEventListener('input', () => {
+    if (speedSlider.value == 0) speedSlider.value = 0.1
     if (audioBufferSource) {
         audioBufferSource.playbackRate.value = speedSlider.value;
         const originalDuration = audioBufferSource.buffer.duration;
@@ -161,6 +166,14 @@ speedSlider.addEventListener('input', () => {
         currentPositionDisplay.textContent = `Текущая позиция: ${speedSlider.value}x`;
     }
 });
+
+// volumeSlider.addEventListener('input', () => {
+//     if (gainNode) {
+//         const volume = volumeSlider.value / 100;
+//         gainNode.gain.value = volume;
+//         volumeDisplay.textContent = `${Math.round(volume * 100)}%`;
+//     }
+// });
 
 async function applyPlaybackRate(buffer, rate) {
     const offlineContext = new OfflineAudioContext(buffer.numberOfChannels, buffer.length, buffer.sampleRate);
