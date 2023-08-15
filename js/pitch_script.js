@@ -142,16 +142,19 @@ audioFileInput.addEventListener('change', async () => {
 
     const file = audioFileInput.files[0];
     if (file && file.type.startsWith('audio/')) {
+        console.log(file.name)  
         const mutag = window.mutag;
-        mutag.fetch(file).then((tags) => {
-            selectedFileName.textContent = `${tags.TPE1 == undefined ? tags.TIT2 == undefined ? file.name : tags.TIT2 : `${tags.TPE1}  — ${tags.TIT2}`}`;
-        });
-
-        let fileName = file.name;
-        if (fileName.length > 48) {
-            fileName = fileName.substring(0, 45) + '...';
+        if (file.type !== "audio/wav") {
+            mutag.fetch(file).then((tags) => {
+                selectedFileName.textContent = `${tags.TPE1 == undefined ? tags.TIT2 == undefined ? file.name : tags.TIT2 : `${tags.TPE1}  — ${tags.TIT2}`}`;
+            });
+        } else {
+            if (file.name.length > 48) {
+                file.name = file.name.substring(0, 45) + '...';
+            };
+            selectedFileName.textContent = file.name;
         }
-        // selectedFileName.textContent = fileName;
+
         playButton.disabled = false;
         resetButton.disabled = false;
         downloadButton.disabled = false;
