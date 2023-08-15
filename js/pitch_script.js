@@ -50,7 +50,7 @@ async function play() {
         const file = audioFileInput.files[0];
         if (file) {
             playButton.disabled = true;
-resetButton.disabled = true;
+
             const reader = new FileReader();
             reader.onload = async (e) => {
                 if (audioBufferSource) {
