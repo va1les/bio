@@ -75,11 +75,11 @@ resetButton.disabled = true;
             alert("Пожалуйста, выберите аудиофайл для загрузки.");
 playButton.disabled = true;
         }
-    };
-    setTimeout(() => {
+setTimeout(() => {
         playButton.disabled = false;
         resetButton.disabled = false;
     }, 1000);
+    };
 };
 
 function reset() {
@@ -102,7 +102,7 @@ function reset() {
                 analyser.connect(audioContext.destination);
                 audioBufferSource.playbackRate.value = speedSlider.value;
                 audioBufferSource.start(0);
-                changeIconPlayButton(false)
+                changeIconPlayButton(true)
                 isPlaying = true;
             };
             reader.readAsArrayBuffer(file);
