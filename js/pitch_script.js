@@ -34,7 +34,7 @@ function changeIconPlayButton(boolean) {
     }
 }
 
-function play() {
+async function play() {
     playButton.disabled = true;
     if (audioBufferSource && audioContext.state === 'running') {
         audioContext.suspend().then(() => {
@@ -66,15 +66,14 @@ resetButton.disabled = true;
                 changeIconPlayButton(true)
                 isPlaying = true;
 
-                downloadButton.style.display = 'inline-block';
-
                 const originalDuration = buffer.duration;
                 const newDuration = originalDuration / speedSlider.value;
                 currentPositionDisplay.textContent = `Текущая позиция: ${speedSlider.value}x (${newDuration.toFixed(2)} сек.)`;
             };
-            reader.readAsArrayBuffer(file);
+            await reader.readAsArrayBuffer(file);
         } else {
-            alert("Пожалуйста, выберите аудиофайл для загрузки.")
+            alert("Пожалуйста, выберите аудиофайл для загрузки.");
+playButton.disabled = true;
         }
     };
     setTimeout(() => {
