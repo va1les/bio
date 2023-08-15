@@ -50,7 +50,7 @@ async function play() {
         });
     } else {
         const file = audioFileInput.files[0];
-        if (file && file.indexOf(".mp3") == file.length - 4) {
+        if (file && file.type.startsWith('audio/')) {
             playButton.disabled = true;
 
             const reader = new FileReader();
