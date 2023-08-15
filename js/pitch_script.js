@@ -48,6 +48,7 @@ function play() {
         const file = audioFileInput.files[0];
         if (file) {
             playButton.disabled = true;
+resetButton.disabled = true;
             const reader = new FileReader();
             reader.onload = async (e) => {
                 if (audioBufferSource) {
@@ -78,11 +79,13 @@ function play() {
     };
     setTimeout(() => {
         playButton.disabled = false;
+        resetButton.disabled = false;
     }, 1000);
 };
 
 function reset() {
     resetButton.disabled = true;
+    playButton.disabled = false;
     if (audioBufferSource) {
         audioBufferSource.stop();
         audioBufferSource.disconnect();
@@ -108,6 +111,7 @@ function reset() {
     }
     setTimeout(() => {
         resetButton.disabled = false;
+        playButton.disabled = false;
     }, 2000);
 };
 
@@ -151,6 +155,9 @@ audioFileInput.addEventListener('change', () => {
         resetButton.disabled = false;
         downloadButton.disabled = false;
     } else {
+        playButton.disabled = true;
+        resetButton.disabled = true;
+        downloadButton.disabled = true;
         selectedFileName.textContent = 'Выберите аудиофайл';
     }
 });
