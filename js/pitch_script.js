@@ -50,7 +50,7 @@ async function play() {
         });
     } else {
         const file = audioFileInput.files[0];
-        if (file && file.type.startsWith('audio/')) {
+        if (file) {
             playButton.disabled = true;
 
             const reader = new FileReader();
@@ -141,10 +141,10 @@ audioFileInput.addEventListener('change', async () => {
     }
 
     const file = audioFileInput.files[0];
-    if (file) {
+    if (file && file.type.startsWith('audio/')) {
         const mutag = window.mutag;
         mutag.fetch(file).then((tags) => {
-            selectedFileName.textContent = `${tags.TPE1} — ${tags.TIT2}`;
+            selectedFileName.textContent = `${tags.TPE1 == undefined ? tags.TIT2 == undefined ? file.name : tags.TIT2 : `${tags.TPE1}  — ${tags.TIT2}`}`;
         });
 
         let fileName = file.name;
