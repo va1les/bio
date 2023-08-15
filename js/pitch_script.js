@@ -62,7 +62,7 @@ resetButton.disabled = true;
                 gainNode.connect(analyser);
                 analyser.connect(audioContext.destination);
                 audioBufferSource.playbackRate.value = speedSlider.value;
-                audioBufferSource.start(0);
+                await audioBufferSource.start(0);
                 changeIconPlayButton(true)
                 isPlaying = true;
 
@@ -70,7 +70,7 @@ resetButton.disabled = true;
                 const newDuration = originalDuration / speedSlider.value;
                 currentPositionDisplay.textContent = `Текущая позиция: ${speedSlider.value}x (${newDuration.toFixed(2)} сек.)`;
             };
-            await reader.readAsArrayBuffer(file);
+        reader.readAsArrayBuffer(file);
         } else {
             alert("Пожалуйста, выберите аудиофайл для загрузки.");
 playButton.disabled = true;
@@ -84,7 +84,7 @@ playButton.disabled = true;
 
 function reset() {
     resetButton.disabled = true;
-    playButton.disabled = false;
+    playButton.disabled = true;
     if (audioBufferSource) {
         audioBufferSource.stop();
         audioBufferSource.disconnect();
@@ -102,7 +102,7 @@ function reset() {
                 analyser.connect(audioContext.destination);
                 audioBufferSource.playbackRate.value = speedSlider.value;
                 audioBufferSource.start(0);
-                changeIconPlayButton(true)
+                changeIconPlayButton(false)
                 isPlaying = true;
             };
             reader.readAsArrayBuffer(file);
