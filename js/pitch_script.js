@@ -28,10 +28,12 @@ function changeIconPlayButton(boolean) {
     if (boolean == true) {
         stylePlay.style.display = 'none';
         stylePause.style.display = 'block';
+playButton.disabled = false
     } else {
         stylePlay.style.display = 'block';
         stylePause.style.display = 'none';
-    }
+   playButton.disabled = false
+ }
 }
 
 async function play() {
@@ -76,10 +78,6 @@ resetButton.disabled = true;
 playButton.disabled = true;
        }
     };
-setTimeout(() => {
-        playButton.disabled = false;
-        resetButton.disabled = false;
-    }, 1000);
 };
 
 function reset() {
@@ -110,7 +108,6 @@ function reset() {
     }
     setTimeout(() => {
         resetButton.disabled = false;
-        playButton.disabled = false;
     }, 2000);
 };
 
