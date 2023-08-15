@@ -158,7 +158,10 @@ audioFileInput.addEventListener('change', async () => {
         playButton.disabled = false;
         resetButton.disabled = false;
         downloadButton.disabled = false;
-    } else {
+    } else if (file && !file.type.startsWith('audio/')) {
+alert("Пожалуйста, выберите аудиофайл.")
+    }
+    else {
         playButton.disabled = true;
         resetButton.disabled = true;
         downloadButton.disabled = true;
