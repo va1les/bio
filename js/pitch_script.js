@@ -159,6 +159,7 @@ audioFileInput.addEventListener('change', async () => {
         playButton.disabled = true;
         resetButton.disabled = true;
         downloadButton.disabled = true;
+        changeIconPlayButton(true);
         selectedFileName.textContent = 'Выберите аудиофайл';
     }
 });
