@@ -108,7 +108,7 @@ function reset() {
     }
     setTimeout(() => {
         resetButton.disabled = false;
-    }, 2000);
+    }, 5000);
 };
 
 async function download() {
