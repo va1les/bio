@@ -100,6 +100,7 @@ function reset() {
                 analyser.connect(audioContext.destination);
                 audioBufferSource.playbackRate.value = speedSlider.value;
                 audioBufferSource.start(0);
+audioContext.resume()
                 changeIconPlayButton(true)
                 isPlaying = true;
             };
