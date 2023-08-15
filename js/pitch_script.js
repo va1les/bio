@@ -77,6 +77,7 @@ async function play() {
             reader.readAsArrayBuffer(file);
         } else {
             alert("Пожалуйста, выберите аудиофайл для загрузки.");
+            changeIconPlayButton(false)
             playButton.disabled = true;
         }
     };
@@ -142,9 +143,8 @@ audioFileInput.addEventListener('change', async () => {
 
     const file = audioFileInput.files[0];
     if (file && file.type.startsWith('audio/')) {
-        console.log(file.name)
         const mutag = window.mutag;
-        if (file.type !== "audio/wav" || file.type !== "audio/aac" || file.type !== "audio/flac") {
+        if (file.name.endsWith(".mp3")) {
             mutag.fetch(file).then((tags) => {
                 selectedFileName.textContent = `${tags.TPE1 == undefined ? tags.TIT2 == undefined ? file.name : tags.TIT2 : `${tags.TPE1}  — ${tags.TIT2}`}`;
             });
@@ -159,18 +159,18 @@ audioFileInput.addEventListener('change', async () => {
         resetButton.disabled = false;
         downloadButton.disabled = false;
     } else if (file && !file.type.startsWith('audio/')) {
-        alert("Пожалуйста, выберите аудиофайл.")
+        alert("Пожалуйста, выберите аудиофайл.");
+        changeIconPlayButton(false);
         playButton.disabled = true;
         resetButton.disabled = true;
         downloadButton.disabled = true;
-        changeIconPlayButton(true);
         selectedFileName.textContent = 'Выберите аудиофайл';
     }
     else {
+        changeIconPlayButton(false);
         playButton.disabled = true;
         resetButton.disabled = true;
         downloadButton.disabled = true;
-        changeIconPlayButton(true);
         selectedFileName.textContent = 'Выберите аудиофайл';
     }
 });
