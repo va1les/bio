@@ -142,9 +142,9 @@ audioFileInput.addEventListener('change', async () => {
 
     const file = audioFileInput.files[0];
     if (file && file.type.startsWith('audio/')) {
-        console.log(file.name)  
+        console.log(file.name)
         const mutag = window.mutag;
-        if (file.type !== "audio/wav") {
+        if (file.type !== "audio/wav" || file.type !== "audio/aac" || file.type !== "audio/flac") {
             mutag.fetch(file).then((tags) => {
                 selectedFileName.textContent = `${tags.TPE1 == undefined ? tags.TIT2 == undefined ? file.name : tags.TIT2 : `${tags.TPE1}  — ${tags.TIT2}`}`;
             });
