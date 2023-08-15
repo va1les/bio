@@ -74,12 +74,12 @@ resetButton.disabled = true;
         } else {
             alert("Пожалуйста, выберите аудиофайл для загрузки.");
 playButton.disabled = true;
-        }
+       }
+    };
 setTimeout(() => {
         playButton.disabled = false;
         resetButton.disabled = false;
     }, 1000);
-    };
 };
 
 function reset() {
