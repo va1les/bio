@@ -82,7 +82,6 @@ playButton.disabled = true;
 
 function reset() {
     resetButton.disabled = true;
-    playButton.disabled = true;
     if (audioBufferSource) {
         audioBufferSource.stop();
         audioBufferSource.disconnect();
@@ -109,7 +108,7 @@ audioContext.resume()
     }
     setTimeout(() => {
         resetButton.disabled = false;
-    }, 5000);
+    }, 1000);
 };
 
 async function download() {
