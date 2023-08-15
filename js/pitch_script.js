@@ -24,16 +24,18 @@ analyser.fftSize = 256;
 const bufferLength = analyser.frequencyBinCount;
 const dataArray = new Uint8Array(bufferLength);
 
-function changeIconPlayButton(boolean) {
+function changeIconPlayButton(boolean, reset_button) {
     if (boolean == true) {
         stylePlay.style.display = 'none';
         stylePause.style.display = 'block';
-playButton.disabled = false
+        playButton.disabled = false;
+        if (reset_button) resetButton.disabled = false;
     } else {
         stylePlay.style.display = 'block';
         stylePause.style.display = 'none';
-   playButton.disabled = false
- }
+        playButton.disabled = false;
+        if (reset_button) resetButton.disabled = false;
+    }
 }
 
 async function play() {
@@ -48,7 +50,7 @@ async function play() {
         });
     } else {
         const file = audioFileInput.files[0];
-        if (file) {
+        if (file && file.indexOf(".mp3") == file.length - 4) {
             playButton.disabled = true;
 
             const reader = new FileReader();
@@ -72,16 +74,17 @@ async function play() {
                 const newDuration = originalDuration / speedSlider.value;
                 currentPositionDisplay.textContent = `Текущая позиция: ${speedSlider.value}x (${newDuration.toFixed(2)} сек.)`;
             };
-        reader.readAsArrayBuffer(file);
+            reader.readAsArrayBuffer(file);
         } else {
             alert("Пожалуйста, выберите аудиофайл для загрузки.");
-playButton.disabled = true;
-       }
+            playButton.disabled = true;
+        }
     };
 };
 
 function reset() {
     resetButton.disabled = true;
+    playButton.disabled = true;
     if (audioBufferSource) {
         audioBufferSource.stop();
         audioBufferSource.disconnect();
@@ -99,16 +102,12 @@ function reset() {
                 analyser.connect(audioContext.destination);
                 audioBufferSource.playbackRate.value = speedSlider.value;
                 audioBufferSource.start(0);
-audioContext.resume()
-                changeIconPlayButton(true)
+                changeIconPlayButton(true, true)
                 isPlaying = true;
             };
             reader.readAsArrayBuffer(file);
         }
     }
-    setTimeout(() => {
-        resetButton.disabled = false;
-    }, 1000);
 };
 
 async function download() {
@@ -131,7 +130,8 @@ async function download() {
     }
 }
 
-audioFileInput.addEventListener('change', () => {
+
+audioFileInput.addEventListener('change', async () => {
     if (audioBufferSource && isPlaying) {
         audioBufferSource.stop();
         audioBufferSource.disconnect();
@@ -142,11 +142,16 @@ audioFileInput.addEventListener('change', () => {
 
     const file = audioFileInput.files[0];
     if (file) {
+        const mutag = window.mutag;
+        mutag.fetch(file).then((tags) => {
+            selectedFileName.textContent = `${tags.TPE1} — ${tags.TIT2}`;
+        });
+
         let fileName = file.name;
         if (fileName.length > 48) {
             fileName = fileName.substring(0, 45) + '...';
         }
-        selectedFileName.textContent = fileName;
+        // selectedFileName.textContent = fileName;
         playButton.disabled = false;
         resetButton.disabled = false;
         downloadButton.disabled = false;

@@ -24,11 +24,11 @@
                 <i class="fa fa-play" id="stylePlay" aria-hidden="true"></i>
                 <i class="fa fa-pause" id="stylePause" aria-hidden="true"></i>
             </button>
-            <button id="resetButton" class="reset-button" onclick="reset()" disabled>
-                <i class="fa fa-repeat" aria-hidden="true"></i>
-            </button>
             <button id="downloadButton" class="download-button" onclick="download()" disabled>
                 <i class="fa fa-download" aria-hidden="true"></i>
+            </button>
+            <button id="resetButton" class="reset-button" onclick="reset()" disabled>
+                <i class="fa fa-repeat" aria-hidden="true"></i>
             </button>
         </div>
         <input type="range" id="speedSlider" class="speed-slider" min="0" max="2" step="0.1" value="1">
@@ -37,6 +37,7 @@
     </div>
     <div id="visualizer"></div>
     <script src="https://kit.fontawesome.com/32d3517338.js" crossorigin="anonymous"></script>
+    <script src="node_modules/mutag/dist/mutag.min.js"></script>
     <script src="js/pitch_script.js"></script>
 </body>
 
