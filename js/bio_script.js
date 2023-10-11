@@ -14,7 +14,11 @@ function localStorageFunction() {
 
 const commandJson =
 {
-  price: {
+  "auto-poster": {
+    text: `Auto Poster — полезный инструмент для автоматической отправки сообщений от вашего лица.<br><br><a class="messageA">https://discord.gg/SJK5uRqqEs</a> — официальный дискорд Auto Poster'а.<br><br><i class="fa fa-shopping-cart" aria-hidden="true"></i> 3 дня бесплатного использования. <a class="small"></a>`,
+    delay: 1000
+  },
+  "discord-bots": {
     text: `Экономика — Договорная;<br>Ваше ТЗ — Договорная;<br>Модерация — от 300₽;<br>Музыка — от 300₽;<br>Баннер — от 200₽;<br>Логирование — от 300₽;<br>Автороли — от 300₽;<br>Тикеты — от 300₽;<br>Верификация — от 200₽;<br><s>ChatGPT — от 200₽.</s>`,
     delay: 2000
   },
@@ -29,7 +33,7 @@ const commandJson =
 };
 
 let prefix = '/';
-let cmds = ['price', 'contact', 'donate'];
+let cmds = ['auto-poster', 'discord-bots', 'contact', 'donate'];
 
 function botTyping(typing_time, answer_time) {
   let messageContainer = document.getElementById("messageContainer");
