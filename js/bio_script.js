@@ -15,7 +15,7 @@ function localStorageFunction() {
 const commandJson =
 {
   "auto-poster": {
-    text: `Auto Poster — полезный инструмент для автоматической отправки сообщений от вашего лица.<br><br><a class="messageA">https://discord.gg/SJK5uRqqEs</a> — официальный дискорд Auto Poster'а.<br><br><i class="fa fa-shopping-cart" aria-hidden="true"></i> 3 дня бесплатного использования. <a class="small"></a>`,
+    text: `Auto Poster — полезный инструмент для автоматической отправки сообщений от вашего лица.<br><br><a class="messageA">https://discord.gg/SJK5uRqqEs</a> — официальный дискорд Auto Poster'а.<br><br><i class="fa fa-shopping-cart" aria-hidden="true"></i> 3 дня бесплатного использования — FREE3DAYS. <a class="small"></a>`,
     delay: 1000
   },
   "discord-bots": {
