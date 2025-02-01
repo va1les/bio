@@ -23,7 +23,7 @@ const commandJson =
     delay: 2000
   },
   contact: {
-    text: `<i class="fab fa-telegram"></i> **Telegram:** @s0bakennn_connect<<i class="fab fa-discord"></i> **Discord:** va1les`,
+    text: `<i class="fab fa-telegram"></i> **Telegram:** @s0bakennn_connect<i class="fab fa-discord"></i> **Discord:** va1les`,
     delay: 1000
   },
   donate: {
