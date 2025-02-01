@@ -6,7 +6,7 @@ const speedSlider = document.getElementById('speedSlider');
 const currentPositionDisplay = document.getElementById('currentPositionDisplay');
 const selectedFileName = document.getElementById('selectedFileName');
 const visualizerContainer = document.getElementById('visualizer');
-const volumeSlider = document.getElementById('volumeSlider');
+const bassBoostCheckbox = document.getElementById('bassBoostCheckbox');
 
 const stylePlay = document.getElementById("stylePlay");
 const stylePause = document.getElementById("stylePause");
@@ -25,7 +25,7 @@ const bufferLength = analyser.frequencyBinCount;
 const dataArray = new Uint8Array(bufferLength);
 
 function changeIconPlayButton(boolean, reset_button) {
-    if (boolean == true) {
+    if (boolean) {
         stylePlay.style.display = 'none';
         stylePause.style.display = 'block';
         playButton.disabled = false;
@@ -60,8 +60,14 @@ async function play() {
                 }
 
                 const buffer = await audioContext.decodeAudioData(e.target.result);
+                let processedBuffer = buffer;
+
+                if (bassBoostCheckbox.checked) {
+                    processedBuffer = await applyBassBoost(buffer);
+                }
+
                 audioBufferSource = audioContext.createBufferSource();
-                audioBufferSource.buffer = buffer;
+                audioBufferSource.buffer = processedBuffer;
                 audioBufferSource.connect(gainNode);
                 gainNode.connect(analyser);
                 analyser.connect(audioContext.destination);
@@ -70,7 +76,7 @@ async function play() {
                 changeIconPlayButton(true)
                 isPlaying = true;
 
-                const originalDuration = buffer.duration;
+                const originalDuration = processedBuffer.duration;
                 const newDuration = originalDuration / speedSlider.value;
                 currentPositionDisplay.textContent = `Текущая позиция: ${speedSlider.value}x (${newDuration.toFixed(2)} сек.)`;
             };
@@ -96,8 +102,14 @@ function reset() {
             const reader = new FileReader();
             reader.onload = async (e) => {
                 const buffer = await audioContext.decodeAudioData(e.target.result);
+                let processedBuffer = buffer;
+
+                if (bassBoostCheckbox.checked) {
+                    processedBuffer = await applyBassBoost(buffer);
+                }
+
                 audioBufferSource = audioContext.createBufferSource();
-                audioBufferSource.buffer = buffer;
+                audioBufferSource.buffer = processedBuffer;
                 audioBufferSource.connect(gainNode);
                 gainNode.connect(analyser);
                 analyser.connect(audioContext.destination);
@@ -131,7 +143,6 @@ async function download() {
     }
 }
 
-
 audioFileInput.addEventListener('change', async () => {
     if (audioBufferSource && isPlaying) {
         audioBufferSource.stop();
@@ -146,12 +157,12 @@ audioFileInput.addEventListener('change', async () => {
         const mutag = window.mutag;
         if (file.name.endsWith(".mp3")) {
             mutag.fetch(file).then((tags) => {
-                selectedFileName.textContent = `${tags.TPE1 == undefined ? tags.TIT2 == undefined ? file.name : tags.TIT2 : `${tags.TPE1}  — ${tags.TIT2}`}`;
+                selectedFileName.textContent = `${tags.TPE1 === undefined ? tags.TIT2 === undefined ? file.name : tags.TIT2 : `${tags.TPE1} — ${tags.TIT2}`}`;
             });
         } else {
             if (file.name.length > 48) {
                 file.name = file.name.substring(0, 45) + '...';
-            };
+            }
             selectedFileName.textContent = file.name;
         }
 
@@ -159,143 +170,168 @@ audioFileInput.addEventListener('change', async () => {
         resetButton.disabled = false;
         downloadButton.disabled = false;
     } else if (file && !file.type.startsWith('audio/')) {
-        alert("Пожалуйста, выберите аудиофайл.");
-        changeIconPlayButton(false);
+        alert("Пожалуйста, выберите аудиофайл для загрузки.");
+        audioFileInput.value = null;
+        selectedFileName.textContent = "Выберите аудиофайл";
         playButton.disabled = true;
         resetButton.disabled = true;
         downloadButton.disabled = true;
-        selectedFileName.textContent = 'Выберите аудиофайл';
-    }
-    else {
-        changeIconPlayButton(false);
-        playButton.disabled = true;
-        resetButton.disabled = true;
-        downloadButton.disabled = true;
-        selectedFileName.textContent = 'Выберите аудиофайл';
     }
 });
 
 speedSlider.addEventListener('input', () => {
-    if (speedSlider.value == 0) speedSlider.value = 0.1
+    const speedValue = parseFloat(speedSlider.value);
+    currentPositionDisplay.textContent = `Текущая позиция: ${speedValue}x`;
     if (audioBufferSource) {
-        audioBufferSource.playbackRate.value = speedSlider.value;
-        const originalDuration = audioBufferSource.buffer.duration;
-        const newDuration = originalDuration / speedSlider.value;
-        currentPositionDisplay.textContent = `Текущая позиция: ${speedSlider.value}x (${newDuration.toFixed(2)} сек.)`;
-    } else {
-        currentPositionDisplay.textContent = `Текущая позиция: ${speedSlider.value}x`;
+        audioBufferSource.playbackRate.value = speedValue;
     }
 });
 
-// volumeSlider.addEventListener('input', () => {
-//     if (gainNode) {
-//         const volume = volumeSlider.value / 100;
-//         gainNode.gain.value = volume;
-//         volumeDisplay.textContent = `${Math.round(volume * 100)}%`;
-//     }
-// });
-
 async function applyPlaybackRate(buffer, rate) {
-    const offlineContext = new OfflineAudioContext(buffer.numberOfChannels, buffer.length, buffer.sampleRate);
+    const offlineContext = new OfflineAudioContext(buffer.numberOfChannels, buffer.duration * buffer.sampleRate, buffer.sampleRate);
     const source = offlineContext.createBufferSource();
     source.buffer = buffer;
+    source.playbackRate.value = rate;
     source.connect(offlineContext.destination);
     source.start(0);
-
-    const targetLength = buffer.length / rate;
-    const newBuffer = offlineContext.createBuffer(buffer.numberOfChannels, targetLength, buffer.sampleRate);
-
-    for (let channel = 0; channel < buffer.numberOfChannels; channel++) {
-        const channelData = buffer.getChannelData(channel);
-        const newChannelData = newBuffer.getChannelData(channel);
-        for (let i = 0; i < targetLength; i++) {
-            const index = Math.floor(i * rate);
-            newChannelData[i] = channelData[index];
-        }
-    }
-
+    const newBuffer = await offlineContext.startRendering();
     return newBuffer;
 }
 
-function audioBufferToWav(aBuffer) {
-    let numOfChan = aBuffer.numberOfChannels,
-        btwLength = aBuffer.length * numOfChan * 2 + 44,
-        btwArrBuff = new ArrayBuffer(btwLength),
-        btwView = new DataView(btwArrBuff),
-        btwChnls = [],
-        btwIndex,
-        btwSample,
-        btwOffset = 0,
-        btwPos = 0;
+function audioBufferToWav(buffer) {
+    let numOfChan = buffer.numberOfChannels,
+        length = buffer.length * numOfChan * 2 + 44,
+        bufferArray = new ArrayBuffer(length),
+        view = new DataView(bufferArray),
+        channels = [],
+        sample,
+        offset = 0,
+        pos = 0;
 
+    // Write WAVE header
     setUint32(0x46464952); // "RIFF"
-    setUint32(btwLength - 8); // file length - 8
+    setUint32(length - 8); // file length - 8
     setUint32(0x45564157); // "WAVE"
+
     setUint32(0x20746d66); // "fmt " chunk
     setUint32(16); // length = 16
     setUint16(1); // PCM (uncompressed)
     setUint16(numOfChan);
-    setUint32(aBuffer.sampleRate);
-    setUint32(aBuffer.sampleRate * 2 * numOfChan); // avg. bytes/sec
+    setUint32(buffer.sampleRate);
+    setUint32(buffer.sampleRate * 2 * numOfChan); // avg. bytes/sec
     setUint16(numOfChan * 2); // block-align
-    setUint16(16); // 16-bit
+    setUint16(16); // 16-bit (hardcoded in this demo)
+
     setUint32(0x61746164); // "data" - chunk
-    setUint32(btwLength - btwPos - 4); // chunk length
+    setUint32(length - pos - 4); // chunk length
 
-    for (btwIndex = 0; btwIndex < aBuffer.numberOfChannels; btwIndex++)
-        btwChnls.push(aBuffer.getChannelData(btwIndex));
+    for (let i = 0; i < buffer.numberOfChannels; i++)
+        channels.push(buffer.getChannelData(i));
 
-    while (btwPos < btwLength) {
-        for (btwIndex = 0; btwIndex < numOfChan; btwIndex++) {
-            btwSample = Math.max(-1, Math.min(1, btwChnls[btwIndex][btwOffset]));
-            btwSample = (0.5 + btwSample < 0 ? btwSample * 32768 : btwSample * 32767) | 0;
-            btwView.setInt16(btwPos, btwSample, true);
-            btwPos += 2;
+    while (pos < length) {
+        for (let i = 0; i < numOfChan; i++) { // interleave channels
+            sample = Math.max(-1, Math.min(1, channels[i][offset])); // clamp
+            sample = (sample < 0 ? sample * 32768 : sample * 32767) | 0; // scale to 16-bit signed int
+            view.setInt16(pos, sample, true); // write 16-bit sample
+            pos += 2;
         }
-        btwOffset++;
+        offset++ // next source sample
     }
 
-    return btwArrBuff;
-
     function setUint16(data) {
-        btwView.setUint16(btwPos, data, true);
-        btwPos += 2;
+        view.setUint16(pos, data, true);
+        pos += 2;
     }
 
     function setUint32(data) {
-        btwView.setUint32(btwPos, data, true);
-        btwPos += 4;
+        view.setUint32(pos, data, true);
+        pos += 4;
     }
+
+    return bufferArray;
 }
+
+async function applyBassBoost(buffer) {
+    const offlineContext = new OfflineAudioContext(buffer.numberOfChannels, buffer.length, buffer.sampleRate);
+    const source = offlineContext.createBufferSource();
+    source.buffer = buffer;
+
+    // Мягкий эквалайзер для баса
+    const lowShelfFilter = offlineContext.createBiquadFilter();
+    lowShelfFilter.type = 'lowshelf';
+    lowShelfFilter.frequency.setValueAtTime(150, offlineContext.currentTime); // Частота 150 Hz
+    lowShelfFilter.gain.setValueAtTime(6, offlineContext.currentTime); // Увеличение на 6 дБ для баса
+
+    const highCutFilter = offlineContext.createBiquadFilter();
+    highCutFilter.type = 'highshelf';
+    highCutFilter.frequency.setValueAtTime(3000, offlineContext.currentTime); // Частота 3000 Hz
+    highCutFilter.gain.setValueAtTime(-2, offlineContext.currentTime); // Уменьшение на 2 дБ
+
+    // Подключение фильтров
+    source.connect(lowShelfFilter);
+    lowShelfFilter.connect(highCutFilter);
+    highCutFilter.connect(offlineContext.destination);
+
+    source.start(0);
+    const newBuffer = await offlineContext.startRendering();
+    return newBuffer;
+}
+
+bassBoostCheckbox.addEventListener('change', async () => {
+    if (isPlaying) {
+        audioBufferSource.stop();
+        audioBufferSource.disconnect();
+        audioBufferSource = null;
+
+        const file = audioFileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                const buffer = await audioContext.decodeAudioData(e.target.result);
+                let processedBuffer = buffer;
+
+                // Примените бас буст, если чекбокс активен
+                if (bassBoostCheckbox.checked) {
+                    processedBuffer = await applyBassBoost(buffer);
+                }
+
+                audioBufferSource = audioContext.createBufferSource();
+                audioBufferSource.buffer = processedBuffer;
+                audioBufferSource.connect(gainNode);
+                gainNode.connect(analyser);
+                analyser.connect(audioContext.destination);
+                audioBufferSource.playbackRate.value = speedSlider.value;
+                await audioBufferSource.start(0);
+                changeIconPlayButton(true);
+                isPlaying = true;
+            };
+            reader.readAsArrayBuffer(file);
+        }
+    }
+});
 
 function updateVisualizer() {
-    const centerIndex = Math.floor((isMobile ? mobileBar : bufferLength) / 2);
-    visualizerContainer.style.display = 'flex';
     analyser.getByteFrequencyData(dataArray);
+    visualizerContainer.innerHTML = ''; // Очищаем контейнер
 
-    visualizerContainer.innerHTML = '';
+    const barWidth = 5; // Ширина столбиков
+    const maxHeight = 100; // Максимальная высота столбиков
+    const center = dataArray.length / 2; // Центр частотного диапазона
 
-    const barMargin = 2;
-    const barWidth = (isMobile ? 10 : 5);
-    const maxHeight = isMobile ? 100 : 200;
-
-    for (let i = 0; i < (isMobile ? mobileBar : bufferLength); i++) {
+    for (let i = 0; i < dataArray.length; i++) {
         const bar = document.createElement('div');
-        bar.className = 'visualizer-bar';
+        const normalizedHeight = dataArray[i] / 255; // Нормализация данных
+        const distanceFromCenter = Math.abs(i - center) / center; // Расстояние от центра
+        const scaleFactor = 1 - distanceFromCenter; // Весовая функция
+        const scaledHeight = normalizedHeight * maxHeight * scaleFactor; // Масштабирование высоты
 
-        const distanceFromCenter = Math.abs(centerIndex - i);
-        const strength = 1 - distanceFromCenter / centerIndex;
-        const normalizedHeight = dataArray[i] / 255;
-        const scaledHeight = normalizedHeight * strength * maxHeight;
-
-        bar.style.width = `${barWidth}px`;
-        bar.style.height = `${scaledHeight}px`;
-        bar.style.marginRight = `${barMargin}px`;
-
-        visualizerContainer.appendChild(bar);
+        bar.className = 'visualizer-bar'; // Класс для стилизации
+        bar.style.height = `${scaledHeight}px`; // Установка высоты
+        visualizerContainer.appendChild(bar); // Добавление столбика в контейнер
     }
 
-    requestAnimationFrame(updateVisualizer);
+    requestAnimationFrame(updateVisualizer); // Запрос следующего обновления
 }
 
+// Запускаем визуализатор
 updateVisualizer();
