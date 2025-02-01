@@ -15,19 +15,19 @@ function localStorageFunction() {
 const commandJson =
 {
   "auto-poster": {
-    text: `Auto Poster — полезный инструмент для автоматической отправки сообщений от вашего лица в дискорд.<br><br><a class="messageA">https://discord.gg/SJK5uRqqEs</a> — официальный дискорд Auto Poster'а.`,
+    text: `Auto Poster — когда-то был полезным инструментом.`,
     delay: 1000
   },
   "discord": {
-    text: `Создаю Discord Bot'ов любой сложности. Готов помочь с кодом или реализовать индивидуальные заказы. Обеспечиваю высококачественные и персонализированные решения для вашего сервера.`,
+    text: `Ничего не создаю. Лень`,
     delay: 2000
   },
   contact: {
-    text: `<i class="fab fa-telegram"></i> **Telegram:** va1les_tg<br><i class="fab fa-discord"></i> **Discord:** va1les`,
+    text: `<i class="fab fa-telegram"></i> **Telegram:** @s0bakennn_connect<<i class="fab fa-discord"></i> **Discord:** va1les`,
     delay: 1000
   },
   donate: {
-    text: `**Вы можете поддержать меня!**<br><br><a class="sber">Sber:</a> 2202 2067 7298 0749<br><a class="qiwi">Qiwi:</a> <a class="link" href="https://qiwi.com/n/VAILES" target="_blank">VAILES</a><br><a class="qiwi">DonationAlerts: </a><a class="link" href="https://www.donationalerts.com/r/va1les" target="_blank">Кликабельно</a><br>`,
+    text: `**Вы не можете поддержать меня!`,
     delay: 1000
   }
 };
@@ -96,9 +96,9 @@ function sendMessage(content) {
     messageInput.value = "";
     return botAnswer("Ваше сообщение не было отправлено.", 1000, 0, 0, 5000, "Система");
   } else if (messageContent !== "") {
-    if (random <= 10) {
+    if (true == false && random <= 10) { // выключил рандом смс
       botAnswer(`<i class="fa fa-music link"></i> <a class="link" href="https://va1les.ru/pitch" target="_blank">https://va1les.ru/pitch</a><br><i class="fas fa-clock link"></i> <a class="link" href="https://va1les.ru/timer" target="_blank">https://va1les.ru/timer</a>`, 0, 0, 0, 8000, "Система")
-    }
+    };
     let messageContainer = document.getElementById("messageContainer");
     let userMessageElement = document.createElement("div");
     userMessageElement.classList.add("message");
