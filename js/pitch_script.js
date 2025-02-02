@@ -256,16 +256,16 @@ async function applyBassBoost(buffer) {
     const source = offlineContext.createBufferSource();
     source.buffer = buffer;
 
-    // Мягкий эквалайзер для баса
+    // бас
     const lowShelfFilter = offlineContext.createBiquadFilter();
     lowShelfFilter.type = 'lowshelf';
-    lowShelfFilter.frequency.setValueAtTime(150, offlineContext.currentTime); // Частота 150 Hz
-    lowShelfFilter.gain.setValueAtTime(6, offlineContext.currentTime); // Увеличение на 6 дБ для баса
+    lowShelfFilter.frequency.setValueAtTime(150, offlineContext.currentTime); // частота 150 Hz
+    lowShelfFilter.gain.setValueAtTime(6, offlineContext.currentTime); // +6 дБ для баса
 
     const highCutFilter = offlineContext.createBiquadFilter();
     highCutFilter.type = 'highshelf';
-    highCutFilter.frequency.setValueAtTime(3000, offlineContext.currentTime); // Частота 3000 Hz
-    highCutFilter.gain.setValueAtTime(-2, offlineContext.currentTime); // Уменьшение на 2 дБ
+    highCutFilter.frequency.setValueAtTime(3000, offlineContext.currentTime); // частота 3000 Hz
+    highCutFilter.gain.setValueAtTime(-2, offlineContext.currentTime); // -2 дБ для баса
 
     // Подключение фильтров
     source.connect(lowShelfFilter);
@@ -290,7 +290,7 @@ bassBoostCheckbox.addEventListener('change', async () => {
                 const buffer = await audioContext.decodeAudioData(e.target.result);
                 let processedBuffer = buffer;
 
-                // Примените бас буст, если чекбокс активен
+                // бас буст, если чекбокс активен
                 if (bassBoostCheckbox.checked) {
                     processedBuffer = await applyBassBoost(buffer);
                 }
@@ -312,25 +312,25 @@ bassBoostCheckbox.addEventListener('change', async () => {
 
 function updateVisualizer() {
     analyser.getByteFrequencyData(dataArray);
-    visualizerContainer.innerHTML = ''; // Очищаем контейнер
+    visualizerContainer.innerHTML = '';
 
-    const barWidth = 5; // Ширина столбиков
-    const maxHeight = 100; // Максимальная высота столбиков
-    const center = dataArray.length / 2; // Центр частотного диапазона
+    const barWidth = 5;
+    const maxHeight = 100;
+    const center = dataArray.length / 2;
 
     for (let i = 0; i < dataArray.length; i++) {
         const bar = document.createElement('div');
-        const normalizedHeight = dataArray[i] / 255; // Нормализация данных
-        const distanceFromCenter = Math.abs(i - center) / center; // Расстояние от центра
-        const scaleFactor = 1 - distanceFromCenter; // Весовая функция
-        const scaledHeight = normalizedHeight * maxHeight * scaleFactor; // Масштабирование высоты
+        const normalizedHeight = dataArray[i] / 255; 
+        const distanceFromCenter = Math.abs(i - center) / center;
+        const scaleFactor = 1 - distanceFromCenter;
+        const scaledHeight = normalizedHeight * maxHeight * scaleFactor;
 
-        bar.className = 'visualizer-bar'; // Класс для стилизации
-        bar.style.height = `${scaledHeight}px`; // Установка высоты
-        visualizerContainer.appendChild(bar); // Добавление столбика в контейнер
+        bar.className = 'visualizer-bar';
+        bar.style.height = `${scaledHeight}px`;
+        visualizerContainer.appendChild(bar);
     }
 
-    requestAnimationFrame(updateVisualizer); // Запрос следующего обновления
+    requestAnimationFrame(updateVisualizer);
 }
 
 // Запускаем визуализатор
